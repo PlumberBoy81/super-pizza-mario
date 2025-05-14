@@ -1,0 +1,82 @@
+{
+    "BmqT:hp2ZmaM0F68tZo^": {
+        "data": "hwQQABAAAAAAAADg7gAAAAAA4O7uDgAAAADu7u4OAAAA4O/u7g7wDwDu393t3v3/4O7+/+3d3f/u7u7f7d3d/e7u7u/u3d0N7u7u7+7d3Q3u7u7f7d3d/+Du/v/t3f3/AO7f3e3e/f8A4O/u7g7//wAA7u7uDv//AADg7u4O8A8AAADg7gAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "goomba"
+    },
+    "CJ-mdh|E1y|AVVI%1g1i": {
+        "data": "hwQQABgAAAAAAAABAAAAAAAAAAAAABABAAAAAAAAAAAAABEBAAAQ0dHRAAAAEBHdER/xEREREQEAEd0R8fEfHQAAAAAQ3RER8fEfHdHR0QDRERER8R/xEREREREdERER8f//EQEAAAAdERER8f//EQEAAADRERER8R/xEREREREQ3RER8fEfHdHR0QAAEd0R8fEfHQAAAAAAEBHdER/xEREREQEAABEBAAAQ0dHRAAAAABABAAAAAAAAAAAAAAABAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "squid"
+    },
+    "image1": {
+        "data": "hwQQABAAAAAAAAAAAADu7gAAAAAA7l3lAAAAAO5dVeUAAADuXSVS7QAA7l1VJVIOAOBdVVVVVe7uTlUiVVVV5U7dVSJVVe0OTtRVVSVS7QBO1FRVJVLlAOBETVVV1Q4AAE5EXVXVDgAA4ETUVd0OAAAATkTd5AAAAADg1E3kAAAAAADu7g4AAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "pizza"
+    },
+    "qU!?pLXk[UD3:N@_V/0(": {
+        "data": "hwQQABgAAAAAAAABANEBAAAAAAAAABAB0BHRAAAAAAAAABEBEBERAQAAAAAAEBHdEREREQAAAAAAEd0RH9EAEQAAAAAQ3RERHxHRAAAAAADRERERHxEREQAAAAAdERER/xEAAAAAAAAdERER/xEAAAAAAADRERERHxEREQAAAAAQ3RERHxHRAAAAAAAAEd0RH9EAEQAAAAAAEBHdEREREQAAAAAAABEBEBERAQAAAAAAABAB0BHRAAAAAAAAAAABANEBAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "squid_fly"
+    },
+    "image4": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAADdAAAAAAANAN3u7gAg0O0AjeDuACDQ7Q2IICIAIN3uDSgiIgAi7u2NKCIiACLd3Y0iIgIAIt3dLVIiAgAi3t4tIiICACLu3o2IIiIAIN7tgIgiIuAA4O6ACCAi7gAAAIDYAOLuAAAAAN0N4A4AAAAA3Q0AAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunLeft0"
+    },
+    "image5": {
+        "data": "hwQQABAAAAAAAAAA3Q0AAAAAAADdDeAOAAAAgNgA4u4A4O6ACCAi7iDe7YCIIiLgIu7ejYgiIgAi3t4tIiICACLd3S1SIgIAIt3djSIiAgAi7u2NKCIiACDd7g0oIiIAINDtDYggIgAg0O0AjeDuAAAADQDd7u4AAAAAAN0AAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunRight0"
+    },
+    "image7": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4O4AiCgAACDe7YCIiAIAIu7ejYiIKO4i3t4tKNgt7iLd3Y0i0i3uIt3djVLS4u4i7u2NKCLiDiDd7g0oIuIOINDtDVAiAA4g0O0AAAAAAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunRight1"
+    },
+    "image6": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAg0O0AAAAAACDQ7Q1QIgAOIN3uDSgi4g4i7u2NKCLiDiLd3Y1S0uLuIt3djSLSLe4i3t4tKNgt7iLu3o2IiCjuIN7tgIiIAgAA4O4AiCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunLeft1"
+    },
+    "image8": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4A4AAAAAAO3uAAAA7g7Q7SIAAOLdDogiIgAg4u7diCgiACDi7d2IKALuINLd3YgoIu4g0t3dgigi7iDi3t6IKCLgANLt3tAtAgAAAt3e3Q0AAAAC3Q7QAAAAAADQAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunRight2"
+    },
+    "image9": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAA0AAAAAAAAALdDtAAAAAAAt3e3Q0AAADS7d7QLQIAIOLe3ogoIuAg0t3dgigi7iDS3d2IKCLuIOLt3YgoAu4g4u7diCgiAADi3Q6IIiIAAADuDtDtIgAAAAAAAO3uAAAAAAAAAOAOAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunLeft2"
+    },
+    "image10": {
+        "data": "hwQQABAAAADdjYgAAO7uAN2N2AgA4O4A3YLdjgAgIgAAAt3eKFIiAADS7d6CIiIAIOLe3ogiIgIg0t3diFIiAiDS3d0oIiICIOLt3YIoIiIg4u7diIgiIgDi3Q6IKCIiAADuDogo4iIAAAAAiAjuDgAAAACI2OAOAAAAAIDdDe4AAAAAAN0AAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_JumpLeft"
+    },
+    "image11": {
+        "data": "hwQQABAAAAAAAAAAAN0AAAAAAACA3Q3uAAAAAIjY4A4AAAAAiAjuDgAA7g6IKOIiAOLdDogoIiIg4u7diIgiIiDi7d2CKCIiINLd3SgiIgIg0t3diFIiAiDi3t6IIiICANLt3oIiIgAAAt3eKFIiAN2C3Y4AICIA3Y3YCADg7gDdjYgAAO7uAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_JumpRight"
+    },
+    "image2": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAIDdDeAg0O0AiN0N7iDQ7Q2I2CLuIN3uDSgiIu4i7u2NIiUiACLd3Y0oIgIAIt3djSgiAgAi3t4tIiUiACLu3o0oIiLuIN7tgIjYIu4A4O4AiN0N7gAAAACA3Q3gAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_IdleLeft"
+    },
+    "image3": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIDdDeAA4O4AiN0N7iDe7YCI2CLuIu7ejSgiIu4i3t4tIiUiACLd3Y0oIgIAIt3djSgiAgAi7u2NIiUiACDd7g0oIiLuINDtDYjYIu4g0O0AiN0N7gAADQCA3Q3gAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_IdleRight"
+    },
+    "image12": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFBVVVUFAABQVVVVVVUFAFVFREREVFUAVVRVVVX1VQBVVFVVVfVVAFX1////X1UAX1VVVVVV9QD/X1VVVfX/APD//////w8AAPD///8PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "coin"
+    },
+    "*": {
+        "mimeType": "image/x-mkcd-f4",
+        "dataEncoding": "base64",
+        "namespace": "myImages"
+    }
+}

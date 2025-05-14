@@ -1,0 +1,52 @@
+{
+    "name": "Super Pizza Mario",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "animation": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "tilemap.g.jres",
+        "tilemap.g.ts",
+        "images.g.jres",
+        "images.g.ts",
+        "main.py"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "branch": "v2.0.40",
+        "tag": "v2.0.40",
+        "commits": "https://github.com/microsoft/pxt-arcade/commits/e365009949b9c899fc4c9914e30e362bd22a209b",
+        "target": "2.0.56",
+        "pxt": "11.3.48",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "pyprj",
+    "palette": [
+        "#000000",
+        "#f8f8f8",
+        "#f80000",
+        "#FF93C4",
+        "#f8a830",
+        "#f8f858",
+        "#089050",
+        "#70d038",
+        "#2868c0",
+        "#10c0c8",
+        "#c868e8",
+        "#c0c0c0",
+        "#787878",
+        "#f8d898",
+        "#c04800",
+        "#000000"
+    ]
+}
