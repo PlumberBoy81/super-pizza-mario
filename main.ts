@@ -191,24 +191,7 @@ function initializeAnimations() {
 function initializeCoinAnimation() {
     
     coinAnimation = animation.createAnimation(ActionKind.Idle, 200)
-    coinAnimation.addAnimationFrame(img`
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . 5 5 5 5 f f . . . . .
-        . . . . 5 5 5 5 5 5 f f . . . .
-        . . . . 5 5 4 4 5 5 f f . . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . 5 5 4 5 5 f 5 5 f f . . .
-        . . . . 5 5 f f 5 5 f f . . . .
-        . . . . 5 5 5 5 5 5 f f . . . .
-        . . . . . 5 5 5 5 f f . . . . .
-        `)
+    coinAnimation.addAnimationFrame(assets.image`coin`)
 }
 
 function initializeHeroAnimations() {
@@ -332,10 +315,10 @@ function attemptJump() {
     if (hero.isHittingTile(CollisionDirection.Bottom)) {
         hero.vy = -4 * pixelsToMeters
     } else if (canDoubleJump) {
-        doubleJumpSpeed = -5 * pixelsToMeters
+        doubleJumpSpeed = -4.25 * pixelsToMeters
         //  Good double jump
         if (hero.vy >= -60) {
-            doubleJumpSpeed = -100000000000000000000 * pixelsToMeters
+            doubleJumpSpeed = -4.25 * pixelsToMeters
             hero.startEffect(effects.trail, 500)
             scene.cameraShake(2, 250)
         }

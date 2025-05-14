@@ -3,7 +3,8 @@
     "description": "",
     "dependencies": {
         "device": "*",
-        "animation": "*"
+        "animation": "*",
+        "pxt-rtttl": "github:pelikhan/pxt-rtttl#v0.0.12"
     },
     "files": [
         "main.blocks",
@@ -42,8 +43,8 @@
         "#70d038",
         "#2868c0",
         "#10c0c8",
-        "#c868e8",
-        "#c0c0c0",
+        "#800080",
+        "#4B0082",
         "#787878",
         "#f8d898",
         "#c04800",

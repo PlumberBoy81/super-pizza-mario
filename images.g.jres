@@ -19,60 +19,115 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "squid_fly"
     },
-    "image4": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAADdAAAAAAANAN3u7gAg0O0AjeDuACDQ7Q2IICIAIN3uDSgiIgAi7u2NKCIiACLd3Y0iIgIAIt3dLVIiAgAi3t4tIiICACLu3o2IIiIAIN7tgIgiIuAA4O6ACCAi7gAAAIDYAOLuAAAAAN0N4A4AAAAA3Q0AAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_RunLeft0"
-    },
-    "image5": {
-        "data": "hwQQABAAAAAAAAAA3Q0AAAAAAADdDeAOAAAAgNgA4u4A4O6ACCAi7iDe7YCIIiLgIu7ejYgiIgAi3t4tIiICACLd3S1SIgIAIt3djSIiAgAi7u2NKCIiACDd7g0oIiIAINDtDYggIgAg0O0AjeDuAAAADQDd7u4AAAAAAN0AAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_RunRight0"
-    },
-    "image7": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4O4AiCgAACDe7YCIiAIAIu7ejYiIKO4i3t4tKNgt7iLd3Y0i0i3uIt3djVLS4u4i7u2NKCLiDiDd7g0oIuIOINDtDVAiAA4g0O0AAAAAAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_RunRight1"
-    },
-    "image6": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAg0O0AAAAAACDQ7Q1QIgAOIN3uDSgi4g4i7u2NKCLiDiLd3Y1S0uLuIt3djSLSLe4i3t4tKNgt7iLu3o2IiCjuIN7tgIiIAgAA4O4AiCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_RunLeft1"
-    },
-    "image8": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4A4AAAAAAO3uAAAA7g7Q7SIAAOLdDogiIgAg4u7diCgiACDi7d2IKALuINLd3YgoIu4g0t3dgigi7iDi3t6IKCLgANLt3tAtAgAAAt3e3Q0AAAAC3Q7QAAAAAADQAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_RunRight2"
-    },
-    "image9": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAA0AAAAAAAAALdDtAAAAAAAt3e3Q0AAADS7d7QLQIAIOLe3ogoIuAg0t3dgigi7iDS3d2IKCLuIOLt3YgoAu4g4u7diCgiAADi3Q6IIiIAAADuDtDtIgAAAAAAAO3uAAAAAAAAAOAOAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_RunLeft2"
-    },
-    "image10": {
-        "data": "hwQQABAAAADdjYgAAO7uAN2N2AgA4O4A3YLdjgAgIgAAAt3eKFIiAADS7d6CIiIAIOLe3ogiIgIg0t3diFIiAiDS3d0oIiICIOLt3YIoIiIg4u7diIgiIgDi3Q6IKCIiAADuDogo4iIAAAAAiAjuDgAAAACI2OAOAAAAAIDdDe4AAAAAAN0AAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_JumpLeft"
-    },
-    "image11": {
-        "data": "hwQQABAAAAAAAAAAAN0AAAAAAACA3Q3uAAAAAIjY4A4AAAAAiAjuDgAA7g6IKOIiAOLdDogoIiIg4u7diIgiIiDi7d2CKCIiINLd3SgiIgIg0t3diFIiAiDi3t6IIiICANLt3oIiIgAAAt3eKFIiAN2C3Y4AICIA3Y3YCADg7gDdjYgAAO7uAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_JumpRight"
-    },
-    "image2": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAIDdDeAg0O0AiN0N7iDQ7Q2I2CLuIN3uDSgiIu4i7u2NIiUiACLd3Y0oIgIAIt3djSgiAgAi3t4tIiUiACLu3o0oIiLuIN7tgIjYIu4A4O4AiN0N7gAAAACA3Q3gAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_IdleLeft"
-    },
-    "image3": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIDdDeAA4O4AiN0N7iDe7YCI2CLuIu7ejSgiIu4i3t4tIiUiACLd3Y0oIgIAIt3djSgiAgAi7u2NIiUiACDd7g0oIiLuINDtDYjYIu4g0O0AiN0N7gAADQCA3Q3gAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Mario_IdleRight"
-    },
     "image12": {
         "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFBVVVUFAABQVVVVVVUFAFVFREREVFUAVVRVVVX1VQBVVFVVVfVVAFX1////X1UAX1VVVVVV9QD/X1VVVfX/APD//////w8AAPD///8PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "coin"
+    },
+    "image11": {
+        "data": "hwQQABAAAAAAAAAAAN0AAAAAAAAg3Q3uAAAAACLS4A4AAAAAIgLuDgAA7g4iguiIAOLdDiKCiIgg4u7dIiKIiCDi7d0ogoiIINLd3YKIiAgg0t3dIliICCDy398iiIgIANL93yiIiAAAAt3fgliIAN0i3S8AgIgA3S3SAgDg7gDdLSIAAO7uAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_JumpRight"
+    },
+    "image10": {
+        "data": "hwQQABAAAADdLSIAAO7uAN0t0gIA4O4A3SLdLwCAiAAAAt3fgliIAADS/d8oiIgAIPLf3yKIiAgg0t3dIliICCDS3d2CiIgIIOLt3SiCiIgg4u7dIiKIiADi3Q4igoiIAADuDiKC6IgAAAAAIgLuDgAAAAAi0uAOAAAAACDdDe4AAAAAAN0AAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_JumpLeft"
+    },
+    "image3": {
+        "data": "hwQMABAAAAAAAAAAIN0N4ADg7gAi3Q3uIN7tICLSiO4i7t4tIoiI7iLe3o2IhYgAIt3dLYKICAAi3d0tgogIACL//S2IhYgAIN3/DSKIiO4g0P0NItKI7iDQ/QAi3Q3uAAANACDdDeA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_IdleRight"
+    },
+    "image2": {
+        "data": "hwQMABAAAAAAAA0AIN0N4CDQ/QAi3Q3uIND9DSLSiO4g3f8NIoiI7iL//S2IhYgAIt3dLYKICAAi3d0tgogIACLe3o2IhYgAIu7eLSKIiO4g3u0gItKI7gDg7gAi3Q3uAAAAACDdDeA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_IdleLeft"
+    },
+    "image9": {
+        "data": "hwQNABAAAAAAANAAAAAAAAAC3Q/QAAAAAALd390NAAAA0v3f0I0IACDy398igojgINLd3SiCiO4g0t3dIoKI7iDi7d0iggjuIOLu3SKCiAAA4t0OIoiIAAAA7g7Q7YgAAAAAAADt7gAAAAAAAADgDg==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunLeft2"
+    },
+    "image8": {
+        "data": "hwQNABAAAAAAAAAAAADgDgAAAAAA7e4AAADuDtDtiAAA4t0OIoiIACDi7t0igogAIOLt3SKCCO4g0t3dIoKI7iDS3d0ogojuIPLf3yKCiOAA0v3f0I0IAAAC3d/dDQAAAALdD9AAAAAAANAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunRight2"
+    },
+    "image7": {
+        "data": "hwQLABAAAAAA4O4AIoIAACDe7SAiIggAIu7eLSIigu4i3t6NgtKN7iLd3S2I2I3uIt3dLVjY6O4i//0tgojoDiDd/w2CiOgOIND9DVCIAA4g0P0AAAAAAAAADQAAAAAA",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunRight1"
+    },
+    "image6": {
+        "data": "hwQLABAAAAAAAA0AAAAAACDQ/QAAAAAAIND9DVCIAA4g3f8NgojoDiL//S2CiOgOIt3dLVjY6O4i3d0tiNiN7iLe3o2C0o3uIu7eLSIigu4g3u0gIiIIAADg7gAiggAA",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunLeft1"
+    },
+    "image14": {
+        "data": "hwQMABMAAAAAANAAAGDdDQAOAAAABt0PAGbdDeAOAAAABt3fAGbWgOgOAAAA1v3fAGaIiOgOAABm9t/fbYiFiAgAAABm1t3dbYaICAAAAABm1t3dbYaICAAAAABm5u3djYiFiAgAAABg5u4NYGaIiOgOAAAA5t0OYGbWgOgOAAAAAO4OAGbdDeAOAAAAAAAAAGDdDQAOAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_IdleLeft"
+    },
+    "image13": {
+        "data": "hwQMABMAAAAAAAAAAGDdDQAOAAAAAO4OAGbdDeAOAAAA5t0OYGbWgOgOAABg5u4NYGaIiOgOAABm5u3djYiFiAgAAABm1t3dbYaICAAAAABm1t3dbYaICAAAAABm9t/fbYiFiAgAAAAA1v3fAGaIiOgOAAAABt3fAGbWgOgOAAAABt0PAGbdDeAOAAAAANAAAGDdDQAOAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_IdleRight"
+    },
+    "image5": {
+        "data": "hwQPABAAAAAAAAAA3Q0AAAAAAADdDeAOAAAAINIA6O4A4O4gAoCI7iDe7SAiiIjgIu7eLSKIiAAi3t6NiIgIACLd3Y1YiAgAIt3dLYiICAAi//0tgoiIACDd/w2CiIgAIND9DSKAiAAg0P0ALeDuAAAADQDd7u4AAAAAAN0AAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunRight0"
+    },
+    "image4": {
+        "data": "hwQPABAAAAAAAAAA3QAAAAAADQDd7u4AIND9AC3g7gAg0P0NIoCIACDd/w2CiIgAIv/9LYKIiAAi3d0tiIgIACLd3Y1YiAgAIt7ejYiICAAi7t4tIoiIACDe7SAiiIjgAODuIAKAiO4AAAAg0gDo7gAAAADdDeAOAAAAAN0NAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Mario_RunLeft0"
+    },
+    "image15": {
+        "data": "hwQRABEAAAAAAAAAANANAAAAAAAAAAAAANbd4A4AAAAAAAAAYGbd7gAAAAAAAAAAYGbt7gAAAAAAAO4OYGaIjggAAAAA5t0OYGaIiAgAAABg5u4NYGaGiAgAAABm5u3djWaIiAgAAABm1t3dbYiIiAAAAABm1t3dbYaFiAAAAABm9t/fbYaIiAAAAAAA1v3fhoaICAAAAAAABt3fZoiFCAAAAADdZtZvBgCICAAAAADdbdZmAACICAAAAADdbWYGAADuAAAAAAAAAAAAAO7uAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_JumpRight"
+    },
+    "image16": {
+        "data": "hwQRABEAAAAAAAAAAO7uAAAAAADdbWYGAADuAAAAAADdbdZmAACICAAAAADdZtZvBgCICAAAAAAABt3fZoiFCAAAAAAA1v3fhoaICAAAAABm9t/fbYaIiAAAAABm1t3dbYaFiAAAAABm1t3dbYiIiAAAAABm5u3djWaIiAgAAABg5u4NYGaGiAgAAAAA5t0OYGaIiAgAAAAAAO4OYGaIjggAAAAAAAAAYGbt7gAAAAAAAAAAYGbd7gAAAAAAAAAAANbd4A4AAAAAAAAAANANAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_JumpLeft"
+    },
+    "image17": {
+        "data": "hwQPABMAAAAAAAAAAN0NAAAAAAAAAAAAAN0NAO4AAAAAAAAAYNYAgO4OAAAAAO4OYAaAiOgOAAAA5t0OYGaIiAgOAABg5u4NYGaIiAgAAABm5u3djYiIiAAAAABm1t3djViICAAAAABm1t3dbYiICAAAAABm9t/fbYaIiAAAAAAA1v3fAIaIiAAAAAAABt3fAGaAiAAAAAAABt0PAG3g7gAAAAAAANAAAN3u7gAAAAAAAAAAAN0AAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_RunRight0"
+    },
+    "image18": {
+        "data": "hwQPABMAAAAAAAAAAN0AAAAAAAAAANAAAN3u7gAAAAAABt0PAG3g7gAAAAAABt3fAGaAiAAAAAAA1v3fAIaIiAAAAABm9t/fbYaIiAAAAABm1t3dbYiICAAAAABm1t3djViICAAAAABm5u3djYiIiAAAAABg5u4NYGaIiAgAAAAA5t0OYGaIiAgOAAAAAO4OYAaAiOgOAAAAAAAAYNYAgO4OAAAAAAAAAN0NAO4AAAAAAAAAAN0NAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_RunLeft0"
+    },
+    "image19": {
+        "data": "hwQLABMAAAAAAO4OAGaGAAAAAAAA5t0OYGZmCAAAAABg5u4NYGZmhugOAABm5u3djYbWjegOAABm1t3dbYjYjegOAABm1t3dbVjYiO4OAABm9t/fbYaIiO4AAAAA1v3fAIaIiO4AAAAABt3fAFCIAOAAAAAABt0PAAAAAAAAAAAAANAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_RunRight1"
+    },
+    "image20": {
+        "data": "hwQLABMAAAAAANAAAAAAAAAAAAAABt0PAAAAAAAAAAAABt3fAFCIAOAAAAAA1v3fAIaIiO4AAABm9t/fbYaIiO4AAABm1t3dbVjYiO4OAABm1t3dbYjYjegOAABm5u3djYbWjegOAABg5u4NYGZmhugOAAAA5t0OYGZmCAAAAAAAAO4OAGaGAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_RunLeft1"
+    },
+    "image21": {
+        "data": "hwQNABIAAAAAAAAAAAAA7gAAAAAAAAAAAADuDgAAAAAAAO4OAACOCAAAAAAA5t0OYIaICAAAAABg5u4NYGaICAAAAABm5u3dbWaIAO4AAABm1t3dbWaIiO4AAABm1t3djWaIiO4AAABm9t/fbWaICOAAAAAA1v3fAN2IAAAAAAAABt3f0N0AAAAAAAAABt0PAA0AAAAAAAAAANAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_RunRight2"
+    },
+    "image22": {
+        "data": "hwQNABIAAAAAANAAAAAAAAAAAAAABt0PAA0AAAAAAAAABt3f0N0AAAAAAAAA1v3fAN2IAAAAAABm9t/fbWaICOAAAABm1t3djWaIiO4AAABm1t3dbWaIiO4AAABm5u3dbWaIAO4AAABg5u4NYGaICAAAAAAA5t0OYIaICAAAAAAAAO4OAACOCAAAAAAAAAAAAADuDgAAAAAAAAAAAAAA7gAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Luigi_RunLeft2"
+    },
+    "image23": {
+        "data": "hwQQABQAAAAAAAAAAAAA3Q0AAAAAAAAAAAAA3Q0AAAAAAAAAAAAA3Q0AAAAAAAAAAAAA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Wario_IdleRight"
     },
     "*": {
         "mimeType": "image/x-mkcd-f4",
