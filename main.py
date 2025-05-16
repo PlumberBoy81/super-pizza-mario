@@ -59,8 +59,12 @@ mainCrouchLeft = None
 invincibilityPeriod = 600  # how long to pause between each contact with a single enemy
 pixelsToMeters = 30
 gravity = 9.81 * pixelsToMeters
+
+# Player initialization
 currentPlayer = "Mario"  # Track current character
 hero = sprites.create(assets.image("Mario_IdleRight"), SpriteKind.player)  # Initialize as Mario
+attachMarioAnimations()  # Attach Mario's animations right after creating the sprite
+
 scene.set_background_color(9)
 initializeAnimations()
 createPlayer(hero)
