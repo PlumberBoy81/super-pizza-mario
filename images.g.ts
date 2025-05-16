@@ -95,25 +95,6 @@ d111d111111d111d
 ................
 ................
 `;
-            case "image12":
-            case "coin":return img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . 5 5 5 5 f f . . . . . 
-. . . . 5 5 5 5 5 5 f f . . . . 
-. . . . 5 5 4 4 5 5 f f . . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . 5 5 4 5 5 f 5 5 f f . . . 
-. . . . 5 5 f f 5 5 f f . . . . 
-. . . . 5 5 5 5 5 5 f f . . . . 
-. . . . . 5 5 5 5 f f . . . . . 
-`;
             case "image11":
             case "Mario_JumpRight":return img`
 . . . . . . . . . . . . . d d d 
@@ -520,26 +501,223 @@ d d d f d d d e e d e . .
 `;
             case "image23":
             case "Wario_IdleRight":return img`
-................
-................
-................
-................
-................
-................
-................
-................
-................
-................
-................
-................
-................
-................
-ddd.............
-dddd............
-ddd.............
-................
-................
-................
+......5555......
+....5555555.....
+..555555555.....
+..55555555555...
+..edeedddfd.....
+.eeddeeddf333...
+.eeedeeddd3333..
+..eeedddffff33..
+...eeddddddd....
+..555a55555.....
+.5555a5555a555..
+.5555aaaaaa5555.
+5555a1aaaa1a5555
+dddaaaaaaaaaaddd
+ddddaaaaaaaadddd
+dddaaaaaaaaaaddd
+..aaaaa..aaaaa..
+..6666....6666..
+.66666....66666.
+`;
+            case "image24":
+            case "Wario_IdleLeft":return img`
+......5555......
+.....5555555....
+.....555555555..
+...55555555555..
+.....dfdddeede..
+...333fddeeddee.
+..3333dddeedeee.
+..33ffffdddeee..
+....dddddddee...
+.....55555a555..
+..555a5555a5555.
+.5555aaaaaa5555.
+5555a1aaaa1a5555
+dddaaaaaaaaaaddd
+ddddaaaaaaaadddd
+dddaaaaaaaaaaddd
+..aaaaa..aaaaa..
+..6666....6666..
+.66666....66666.
+`;
+            case "image25":
+            case "Wario_JumpRight":return img`
+.........5555........
+.......5555555..ddd..
+.....555555555.dddd..
+.....55555555555ddd..
+.....edeedddfd.5555..
+....eeddeeddf333555..
+....eeedeeddd333355..
+.....eeedddffff335...
+......eeddddddd555...
+...55555a555a55555...
+.d5555555a555a555....
+ddd55555aaaaaa55.....
+dddd5.5aa1aaa1a5.....
+.dd...aaaaaaaaaa....6
+......aaaaaaaaaaaaa66
+.....6aaaaaaaaaaaaa66
+....666aaaaaaaaaaaa66
+...6666aaaaa.........
+...66................
+...6.................
+`;
+            case "image26":
+            case "Wario_JumpLeft":return img`
+........5555.........
+..ddd..5555555.......
+..dddd.555555555.....
+..ddd55555555555.....
+..5555.dfdddeede.....
+..555333fddeeddee....
+..553333dddeedeee....
+...533ffffdddeee.....
+...555dddddddee......
+...55555a555a55555...
+....555a555a5555555d.
+.....55aaaaaa55555ddd
+.....5a1aaa1aa5.5dddd
+6....aaaaaaaaaa...dd.
+66aaaaaaaaaaaaa......
+66aaaaaaaaaaaaa6.....
+66aaaaaaaaaaaa666....
+.........aaaaa6666...
+................66...
+.................6...
+`;
+            case "image27":
+            case "Wario_RunRight0":return img`
+.......5555......
+.....5555555.....
+...555555555.....
+...55555555555...
+...edeedddfd.....
+..eeddeeddf333...
+..eeedeeddd3333..
+...eeedddffff33..
+....eeddddddd....
+...55555aa55..ddd
+.dd55555aaa555ddd
+ddd5555aa1aa555dd
+dddd.5aaaaaaa.6..
+.dd..aaaaaaaa66..
+....aaaaaaaaa66..
+...aaaaaaaaaa66..
+..66aaaa...aa66..
+..666aa..........
+..666............
+...666...........
+`;
+            case "image28":
+            case "Wario_RunLeft0":return img`
+......5555.......
+.....5555555.....
+.....555555555...
+...55555555555...
+.....dfdddeede...
+...333fddeeddee..
+..3333dddeedeee..
+..33ffffdddeee...
+....dddddddee....
+ddd..55aa55555...
+ddd555aaa55555dd.
+dd555aa1aa5555ddd
+..6.aaaaaaa5.dddd
+..66aaaaaaaa..dd.
+..66aaaaaaaaa....
+..66aaaaaaaaaa...
+..66aa...aaaa66..
+..........aa666..
+............666..
+...........666...
+`;
+            case "image29":
+            case "Wario_RunRight1":return img`
+. . . . . 5 5 5 5 . . . . 
+. . . 5 5 5 5 5 5 5 . . . 
+. 5 5 5 5 5 5 5 5 5 . . . 
+. 5 5 5 5 5 5 5 5 5 5 5 . 
+. e d e e d d d f d . . . 
+e e d d e e d d f 3 3 3 . 
+e e e d e e d d d 3 3 3 3 
+. e e e d d d f f f f 3 3 
+. . e e d d d d d d d . . 
+. . 5 5 5 a 5 5 5 . . . . 
+. 5 5 5 5 5 a a 5 5 . . . 
+. 5 5 5 5 a a 1 a a 1 . . 
+. 5 5 5 5 5 5 a a a a . . 
+. . 5 5 5 5 d d a a a . . 
+. . a 5 5 5 d d d a a . . 
+. . . a 5 5 d d d a a . . 
+. . . a a a a a a a . . . 
+. . . a a a a 6 6 6 . . . 
+. . . 6 6 6 6 6 6 6 6 . . 
+. . . 6 6 6 6 6 . . . . . 
+`;
+            case "image30":
+            case "Wario_RunLeft1":return img`
+. . . . 5 5 5 5 . . . . . 
+. . . 5 5 5 5 5 5 5 . . . 
+. . . 5 5 5 5 5 5 5 5 5 . 
+. 5 5 5 5 5 5 5 5 5 5 5 . 
+. . . d f d d d e e d e . 
+. 3 3 3 f d d e e d d e e 
+3 3 3 3 d d d e e d e e e 
+3 3 f f f f d d d e e e . 
+. . d d d d d d d e e . . 
+. . . . 5 5 5 a 5 5 5 . . 
+. . . 5 5 a a 5 5 5 5 5 . 
+. . 1 a a 1 a a 5 5 5 5 . 
+. . a a a a 5 5 5 5 5 5 . 
+. . a a a d d 5 5 5 5 . . 
+. . a a d d d 5 5 5 a . . 
+. . a a d d d 5 5 a . . . 
+. . . a a a a a a a . . . 
+. . . 6 6 6 a a a a . . . 
+. . 6 6 6 6 6 6 6 6 . . . 
+. . . . . 6 6 6 6 6 . . . 
+`;
+            case "image12":
+            case "coin":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . 4 4 4 4 f f . . . . . 
+. . . . 4 4 4 4 4 4 f f . . . . 
+. . . . 4 4 e e 4 4 f f . . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . 4 4 e 4 4 f 4 4 f f . . . 
+. . . . 4 4 f f 4 4 f f . . . . 
+. . . . 4 4 4 4 4 4 f f . . . . 
+. . . . . 4 4 4 4 f f . . . . . 
+`;
+            case "image31":
+            case "questionblock":return img`
+. e e e e e e e e e e e e e e . 
+e 4 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+e 4 f 4 4 4 4 4 4 4 4 4 4 f 4 f 
+e 4 4 4 4 e e e e e 4 4 4 4 4 f 
+e 4 4 4 e e f f f e e f 4 4 4 f 
+e 4 4 4 e e f 4 4 e e f 4 4 4 f 
+e 4 4 4 e e f 4 4 e e f 4 4 4 f 
+e 4 4 4 4 f f 4 e e e f 4 4 4 f 
+e 4 4 4 4 4 4 e e f f f 4 4 4 f 
+e 4 4 4 4 4 4 e e f 4 4 4 4 4 f 
+e 4 4 4 4 4 4 4 f f 4 4 4 4 4 f 
+e 4 4 4 4 4 4 e e 4 4 4 4 4 4 f 
+e 4 4 4 4 4 4 e e f 4 4 4 4 4 f 
+e 4 f 4 4 4 4 4 f f 4 4 4 f 4 f 
+e 4 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
+f f f f f f f f f f f f f f f f 
 `;
         }
         return null;
