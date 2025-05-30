@@ -133,11 +133,13 @@ def initializeWarioAnimations():
     animation.attach_animation(hero, warioRunLeft)
     warioRunLeft.add_animation_frame(assets.image("Wario_RunLeft0"))
     warioRunLeft.add_animation_frame(assets.image("Wario_RunLeft1"))
+    warioRunLeft.add_animation_frame(assets.image("Wario_RunLeft2"))
     
     warioRunRight = animation.create_animation(ActionKind.RunningRight, 200)
     animation.attach_animation(hero, warioRunRight)
     warioRunRight.add_animation_frame(assets.image("Wario_RunRight0"))
     warioRunRight.add_animation_frame(assets.image("Wario_RunRight1"))
+    warioRunRight.add_animation_frame(assets.image("Wario_RunRight2"))
 
 def initializeFlierAnimations():
     global flierFlying, flierIdle

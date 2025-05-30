@@ -169,6 +169,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "questionblock"
     },
+    "image32": {
+        "data": "hwQNABMAAAAAAOAOAAAAZmYAAAAAVe7uAABgZgYAAAAAVd3uDgBqZgAAAABQVd7tXqWqqgAAAABQVe7eXVWqqgAAAABVVe3eXVWqqgAAAABVVd3dXVWqCgAAAABVVd39rVWqqmoGAABVVf/9XVWqqmoGAABQVT3zXVWqqmoGAAAAUDDzDd2qqgAGAAAAUDAz0N0AAAAAAAAAAAAzAA0AAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Wario_RunRight2"
+    },
+    "image33": {
+        "data": "hwQNABMAAAAAAAAzAA0AAAAAAAAAUDAz0N0AAAAAAAAAUDDzDd2qqgAGAABQVT3zXVWqqmoGAABVVf/9XVWqqmoGAABVVd39rVWqqmoGAABVVd3dXVWqCgAAAABVVe3eXVWqqgAAAABQVe7eXVWqqgAAAABQVd7tXqWqqgAAAAAAVd3uDgBqZgAAAAAAVe7uAABgZgYAAAAAAOAOAAAAZmYAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Wario_RunLeft2"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

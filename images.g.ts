@@ -719,6 +719,50 @@ e 4 f 4 4 4 4 4 f f 4 4 4 f 4 f
 e 4 4 4 4 4 4 4 4 4 4 4 4 4 4 f 
 f f f f f f f f f f f f f f f f 
 `;
+            case "image32":
+            case "Wario_RunRight2":return img`
+. . . . . 5 5 5 5 . . . . 
+. . . 5 5 5 5 5 5 5 . . . 
+. 5 5 5 5 5 5 5 5 5 . . . 
+. 5 5 5 5 5 5 5 5 5 5 5 . 
+. e d e e d d d f d . . . 
+e e d d e e d d f 3 3 3 . 
+e e e d e e d d d 3 3 3 3 
+. e e e d d d f f f f 3 3 
+. . e e d d d d d d d . . 
+. . . 5 5 5 5 a 5 5 . d . 
+. . . 5 5 5 5 5 5 5 d d d 
+. . . a 5 5 5 5 5 5 d d . 
+. . a a a a a a a a a . . 
+. 6 6 a a a a a a a a . . 
+6 6 6 a a a a a a a a . . 
+6 6 6 a a a . a a a a . . 
+6 6 . . . . . a a a . . . 
+6 . . . . . . 6 6 6 . . . 
+. . . . . . . 6 6 6 6 . . 
+`;
+            case "image33":
+            case "Wario_RunLeft2":return img`
+. . . . 5 5 5 5 . . . . . 
+. . . 5 5 5 5 5 5 5 . . . 
+. . . 5 5 5 5 5 5 5 5 5 . 
+. 5 5 5 5 5 5 5 5 5 5 5 . 
+. . . d f d d d e e d e . 
+. 3 3 3 f d d e e d d e e 
+3 3 3 3 d d d e e d e e e 
+3 3 f f f f d d d e e e . 
+. . d d d d d d d e e . . 
+. d . 5 5 a 5 5 5 5 . . . 
+d d d 5 5 5 5 5 5 5 . . . 
+. d d 5 5 5 5 5 5 a . . . 
+. . a a a a a a a a a . . 
+. . a a a a a a a a 6 6 . 
+. . a a a a a a a a 6 6 6 
+. . a a a a . a a a 6 6 6 
+. . . a a a . . . . . 6 6 
+. . . 6 6 6 . . . . . . 6 
+. . 6 6 6 6 . . . . . . . 
+`;
         }
         return null;
     })

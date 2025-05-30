@@ -261,10 +261,12 @@ function initializeWarioAnimations() {
     animation.attachAnimation(hero, warioRunLeft)
     warioRunLeft.addAnimationFrame(assets.image`Wario_RunLeft0`)
     warioRunLeft.addAnimationFrame(assets.image`Wario_RunLeft1`)
+    warioRunLeft.addAnimationFrame(assets.image`Wario_RunLeft2`)
     warioRunRight = animation.createAnimation(ActionKind.RunningRight, 200)
     animation.attachAnimation(hero, warioRunRight)
     warioRunRight.addAnimationFrame(assets.image`Wario_RunRight0`)
     warioRunRight.addAnimationFrame(assets.image`Wario_RunRight1`)
+    warioRunRight.addAnimationFrame(assets.image`Wario_RunRight2`)
 }
 
 function initializeFlierAnimations() {
