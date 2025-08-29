@@ -151,8 +151,6 @@ let coin : Sprite = null
 let playerStartLocation : tiles.Location = null
 let flier : Sprite = null
 let bumper : Sprite = null
-//  Mario animations (not global objects; created & attached per sprite)
-//  Luigi animations will be created & attached per sprite as well
 let flierIdle : animation.Animation = null
 let flierFlying : animation.Animation = null
 let coinAnimation : animation.Animation = null
@@ -162,29 +160,42 @@ let gravity = 0
 let pixelsToMeters = 0
 let invincibilityPeriod = 0
 let hero : Sprite = null
-let mainCrouchRight = null
-let mainCrouchLeft = null
 //  Double-jump state variables
 let doubleJumpSpeed = 0
 let canDoubleJump = true
+//  Character constants
+let CHAR_MARIO = 0
+let CHAR_LUIGI = 1
+let CHAR_WARIO = 2
+//  Current character index (start as Mario)
+let current_character = CHAR_MARIO
 //  Character-specific gameplay parameters
-let heroIsLuigi = false
 let mario_speed = 100
-let luigi_speed = 120
+let luigi_speed = 110
 //  Luigi slightly faster
+let wario_speed = 90
+//  Wario slower than Mario
 let mario_jump_multiplier = -4.0
 //  base jump multiplier (will be multiplied by pixelsToMeters)
 let luigi_jump_multiplier = -5.0
 //  Luigi higher jump
+let wario_jump_multiplier = -3.5
+//  Wario lower jump than Mario
 let mario_traction = 0.8
 //  higher traction => quicker stopping
 let luigi_traction = 0.95
-//  lower traction => more slippery (keeps speed more)
+//  lower traction => more slippery
+let wario_traction = 0.85
+//  slightly higher traction than Mario
 let current_speed = mario_speed
 let current_jump_multiplier = mario_jump_multiplier
 let current_traction = mario_traction
 //  Keep track of currently set animation action to avoid restarting animations every frame
 let heroCurrentAction = ActionKind.IdleRight
+//  Animation coyote/grace: treat the hero as grounded for a short time after leaving the ground
+let lastGroundedTime = 0
+let animationCoyoteMs = 120
+//  milliseconds of grace before switching to jump animation
 //  Create the initial hero sprite (Mario by default)
 hero = sprites.create(assets.image`Mario_IdleRight`, SpriteKind.Player)
 invincibilityPeriod = 600
@@ -202,6 +213,7 @@ function initializeAnimations() {
     
     heroCurrentAction = ActionKind.IdleRight
     animation.setAction(hero, heroCurrentAction)
+    lastGroundedTime = game.runtime()
 }
 
 function initializeCoinAnimation() {
@@ -283,6 +295,34 @@ function attach_luigi_animations_to(s: Sprite) {
     luigiJumpRight.addAnimationFrame(assets.image`Luigi_JumpRight`)
 }
 
+function attach_wario_animations_to(s: Sprite) {
+    //  Idle
+    let warioIdleLeft = animation.createAnimation(ActionKind.IdleLeft, 100)
+    animation.attachAnimation(s, warioIdleLeft)
+    warioIdleLeft.addAnimationFrame(assets.image`Wario_IdleLeft`)
+    let warioIdleRight = animation.createAnimation(ActionKind.IdleRight, 100)
+    animation.attachAnimation(s, warioIdleRight)
+    warioIdleRight.addAnimationFrame(assets.image`Wario_IdleRight`)
+    //  Run (3 frames each direction)
+    let warioRunLeft = animation.createAnimation(ActionKind.RunningLeft, 200)
+    animation.attachAnimation(s, warioRunLeft)
+    warioRunLeft.addAnimationFrame(assets.image`Wario_RunLeft0`)
+    warioRunLeft.addAnimationFrame(assets.image`Wario_RunLeft1`)
+    warioRunLeft.addAnimationFrame(assets.image`Wario_RunLeft2`)
+    let warioRunRight = animation.createAnimation(ActionKind.RunningRight, 200)
+    animation.attachAnimation(s, warioRunRight)
+    warioRunRight.addAnimationFrame(assets.image`Wario_RunRight0`)
+    warioRunRight.addAnimationFrame(assets.image`Wario_RunRight1`)
+    warioRunRight.addAnimationFrame(assets.image`Wario_RunRight2`)
+    //  Jump
+    let warioJumpLeft = animation.createAnimation(ActionKind.JumpingLeft, 100)
+    animation.attachAnimation(s, warioJumpLeft)
+    warioJumpLeft.addAnimationFrame(assets.image`Wario_JumpLeft`)
+    let warioJumpRight = animation.createAnimation(ActionKind.JumpingRight, 100)
+    animation.attachAnimation(s, warioJumpRight)
+    warioJumpRight.addAnimationFrame(assets.image`Wario_JumpRight`)
+}
+
 // ### Collisions ####
 scene.onOverlapTile(SpriteKind.Player, myTiles.tile1, function on_overlap_tile(sprite: Sprite, location: tiles.Location) {
     
@@ -340,6 +380,16 @@ function attemptJump() {
     //  ground jump
     if (hero.isHittingTile(CollisionDirection.Bottom)) {
         hero.vy = current_jump_multiplier * pixelsToMeters
+        //  Player initiated jump: immediately set jump animation
+        if (heroFacingLeft) {
+            heroCurrentAction = ActionKind.JumpingLeft
+        } else {
+            heroCurrentAction = ActionKind.JumpingRight
+        }
+        
+        animation.setAction(hero, heroCurrentAction)
+        //  prevent the coyote window from considering the player grounded right after the intentional jump
+        lastGroundedTime = 0
     } else if (canDoubleJump) {
         doubleJumpSpeed = -5 * pixelsToMeters
         //  Good double jump
@@ -351,6 +401,14 @@ function attemptJump() {
         
         hero.vy = doubleJumpSpeed
         canDoubleJump = false
+        //  force jump animation on double jump too
+        if (heroFacingLeft) {
+            heroCurrentAction = ActionKind.JumpingLeft
+        } else {
+            heroCurrentAction = ActionKind.JumpingRight
+        }
+        
+        animation.setAction(hero, heroCurrentAction)
     }
     
 }
@@ -442,6 +500,7 @@ function createPlayer(player2: Sprite, speed: number = 100, initialize_stats: bo
     }
     
     animation.setAction(player2, heroCurrentAction)
+    lastGroundedTime = game.runtime()
 }
 
 function initializeLevel(level2: number) {
@@ -469,7 +528,7 @@ function spawnGoals() {
     }
 }
 
-// ### Switching characters (Mario <-> Luigi) ####
+// ### Switching characters (Mario <-> Luigi <-> Wario) ####
 function switch_character() {
     let new_image: Image;
     
@@ -481,30 +540,13 @@ function switch_character() {
     let saved_life = info.life()
     let saved_score = info.score()
     let saved_facing_left = heroFacingLeft
+    let saved_char = current_character
     //  Destroy old hero sprite
     hero.destroy()
-    //  Toggle
-    heroIsLuigi = !heroIsLuigi
-    //  Create new sprite with appropriate idle image depending on facing
-    if (heroIsLuigi) {
-        //  create Luigi
-        if (saved_facing_left) {
-            new_image = assets.image`Luigi_IdleLeft`
-            heroCurrentAction = ActionKind.IdleLeft
-        } else {
-            new_image = assets.image`Luigi_IdleRight`
-            heroCurrentAction = ActionKind.IdleRight
-        }
-        
-        hero = sprites.create(new_image, SpriteKind.Player)
-        //  Set character-specific parameters
-        current_speed = luigi_speed
-        current_jump_multiplier = luigi_jump_multiplier
-        current_traction = luigi_traction
-        //  Attach animations for Luigi
-        attach_luigi_animations_to(hero)
-    } else {
-        //  create Mario
+    //  Cycle to next character
+    current_character = (current_character + 1) % 3
+    //  Create new sprite with appropriate idle image depending on facing and character
+    if (current_character == CHAR_MARIO) {
         if (saved_facing_left) {
             new_image = assets.image`Mario_IdleLeft`
             heroCurrentAction = ActionKind.IdleLeft
@@ -518,6 +560,35 @@ function switch_character() {
         current_jump_multiplier = mario_jump_multiplier
         current_traction = mario_traction
         attach_mario_animations_to(hero)
+    } else if (current_character == CHAR_LUIGI) {
+        if (saved_facing_left) {
+            new_image = assets.image`Luigi_IdleLeft`
+            heroCurrentAction = ActionKind.IdleLeft
+        } else {
+            new_image = assets.image`Luigi_IdleRight`
+            heroCurrentAction = ActionKind.IdleRight
+        }
+        
+        hero = sprites.create(new_image, SpriteKind.Player)
+        current_speed = luigi_speed
+        current_jump_multiplier = luigi_jump_multiplier
+        current_traction = luigi_traction
+        attach_luigi_animations_to(hero)
+    } else {
+        //  CHAR_WARIO
+        if (saved_facing_left) {
+            new_image = assets.image`Wario_IdleLeft`
+            heroCurrentAction = ActionKind.IdleLeft
+        } else {
+            new_image = assets.image`Wario_IdleRight`
+            heroCurrentAction = ActionKind.IdleRight
+        }
+        
+        hero = sprites.create(new_image, SpriteKind.Player)
+        current_speed = wario_speed
+        current_jump_multiplier = wario_jump_multiplier
+        current_traction = wario_traction
+        attach_wario_animations_to(hero)
     }
     
     //  Restore position and motion
@@ -532,6 +603,7 @@ function switch_character() {
     info.setScore(saved_score)
     //  Ensure the hero has the correct current animation action set
     animation.setAction(hero, heroCurrentAction)
+    lastGroundedTime = game.runtime()
 }
 
 controller.B.onEvent(ControllerButtonEvent.Pressed, function on_b_pressed() {
@@ -574,11 +646,12 @@ game.onUpdate(function on_update2() {
         
     }
 })
-//  Reset double jump when standing on ground
+//  Reset double jump when standing on ground and update grounded timestamp
 game.onUpdate(function on_update3() {
     
     if (hero.isHittingTile(CollisionDirection.Bottom)) {
         canDoubleJump = true
+        lastGroundedTime = game.runtime()
     }
     
 })
@@ -600,10 +673,12 @@ game.onUpdate(function on_update4() {
         hero.vy = 0
     }
     
-    //  Decide desired action. Use grounded check (is_hitting_tile(BOTTOM)) to determine airborne.
-    let grounded = hero.isHittingTile(CollisionDirection.Bottom)
-    if (!grounded) {
-        //  If airborne, always use jumping animation (prevents flicker between run and jump)
+    //  Decide desired action. Use grounded check (is_hitting_tile(BOTTOM))
+    //  but allow a short grace window after leaving ground so small hops/bumps don't flicker animation.
+    let grounded_now = hero.isHittingTile(CollisionDirection.Bottom)
+    let grounded_effective = grounded_now || game.runtime() - lastGroundedTime <= animationCoyoteMs
+    if (!grounded_effective) {
+        //  If effectively airborne, always use jumping animation (prevents flicker between run and jump)
         if (heroFacingLeft) {
             desired_action = ActionKind.JumpingLeft
         } else {
@@ -627,7 +702,8 @@ game.onUpdate(function on_update4() {
     }
     
     //  Traction: when on ground and player isn't pressing left/right, apply friction
-    if (grounded) {
+    if (grounded_now) {
+        //  only apply traction if actually on ground (not in coyote)
         left_pressed = controller.left.isPressed()
         right_pressed = controller.right.isPressed()
         if (!left_pressed && !right_pressed) {

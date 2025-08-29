@@ -25,8 +25,6 @@ coin: Sprite = None
 playerStartLocation: tiles.Location = None
 flier: Sprite = None
 bumper: Sprite = None
-# Mario animations (not global objects; created & attached per sprite)
-# Luigi animations will be created & attached per sprite as well
 
 flierIdle: animation.Animation = None
 flierFlying: animation.Animation = None
@@ -37,27 +35,42 @@ gravity = 0
 pixelsToMeters = 0
 invincibilityPeriod = 0
 hero: Sprite = None
-mainCrouchRight = None
-mainCrouchLeft = None
 
 # Double-jump state variables
 doubleJumpSpeed = 0
 canDoubleJump = True
 
+# Character constants
+CHAR_MARIO = 0
+CHAR_LUIGI = 1
+CHAR_WARIO = 2
+
+# Current character index (start as Mario)
+current_character = CHAR_MARIO
+
 # Character-specific gameplay parameters
-heroIsLuigi = False
 mario_speed = 100
-luigi_speed = 120               # Luigi slightly faster
+luigi_speed = 110              # Luigi slightly faster
+wario_speed = 90                # Wario slower than Mario
+
 mario_jump_multiplier = -4.0    # base jump multiplier (will be multiplied by pixelsToMeters)
 luigi_jump_multiplier = -5.0    # Luigi higher jump
+wario_jump_multiplier = -3.5    # Wario lower jump than Mario
+
 mario_traction = 0.8            # higher traction => quicker stopping
-luigi_traction = 0.95           # lower traction => more slippery (keeps speed more)
+luigi_traction = 0.95           # lower traction => more slippery
+wario_traction = 0.85           # slightly higher traction than Mario
+
 current_speed = mario_speed
 current_jump_multiplier = mario_jump_multiplier
 current_traction = mario_traction
 
 # Keep track of currently set animation action to avoid restarting animations every frame
 heroCurrentAction = ActionKind.IdleRight
+
+# Animation coyote/grace: treat the hero as grounded for a short time after leaving the ground
+lastGroundedTime = 0
+animationCoyoteMs = 120  # milliseconds of grace before switching to jump animation
 
 # Create the initial hero sprite (Mario by default)
 hero = sprites.create(assets.image("Mario_IdleRight"), SpriteKind.player)
@@ -74,9 +87,10 @@ def initializeAnimations():
     # Attach Mario animations to the initial hero (Mario)
     attach_mario_animations_to(hero)
     # initial action
-    global heroCurrentAction
+    global heroCurrentAction, lastGroundedTime
     heroCurrentAction = ActionKind.IdleRight
     animation.set_action(hero, heroCurrentAction)
+    lastGroundedTime = game.runtime()
 
 
 def initializeCoinAnimation():
@@ -168,6 +182,39 @@ def attach_luigi_animations_to(s: Sprite):
     luigiJumpRight.add_animation_frame(assets.image("Luigi_JumpRight"))
 
 
+def attach_wario_animations_to(s: Sprite):
+    # Idle
+    warioIdleLeft = animation.create_animation(ActionKind.IdleLeft, 100)
+    animation.attach_animation(s, warioIdleLeft)
+    warioIdleLeft.add_animation_frame(assets.image("Wario_IdleLeft"))
+
+    warioIdleRight = animation.create_animation(ActionKind.IdleRight, 100)
+    animation.attach_animation(s, warioIdleRight)
+    warioIdleRight.add_animation_frame(assets.image("Wario_IdleRight"))
+
+    # Run (3 frames each direction)
+    warioRunLeft = animation.create_animation(ActionKind.RunningLeft, 200)
+    animation.attach_animation(s, warioRunLeft)
+    warioRunLeft.add_animation_frame(assets.image("Wario_RunLeft0"))
+    warioRunLeft.add_animation_frame(assets.image("Wario_RunLeft1"))
+    warioRunLeft.add_animation_frame(assets.image("Wario_RunLeft2"))
+
+    warioRunRight = animation.create_animation(ActionKind.RunningRight, 200)
+    animation.attach_animation(s, warioRunRight)
+    warioRunRight.add_animation_frame(assets.image("Wario_RunRight0"))
+    warioRunRight.add_animation_frame(assets.image("Wario_RunRight1"))
+    warioRunRight.add_animation_frame(assets.image("Wario_RunRight2"))
+
+    # Jump
+    warioJumpLeft = animation.create_animation(ActionKind.JumpingLeft, 100)
+    animation.attach_animation(s, warioJumpLeft)
+    warioJumpLeft.add_animation_frame(assets.image("Wario_JumpLeft"))
+
+    warioJumpRight = animation.create_animation(ActionKind.JumpingRight, 100)
+    animation.attach_animation(s, warioJumpRight)
+    warioJumpRight.add_animation_frame(assets.image("Wario_JumpRight"))
+
+
 #### Collisions ####
 def on_overlap_tile(sprite, location):
     global currentLevel
@@ -231,10 +278,18 @@ controller.down.on_event(ControllerButtonEvent.PRESSED, on_down_pressed)
 
 
 def attemptJump():
-    global doubleJumpSpeed, canDoubleJump
+    global doubleJumpSpeed, canDoubleJump, heroCurrentAction, lastGroundedTime
     # ground jump
     if hero.is_hitting_tile(CollisionDirection.BOTTOM):
         hero.vy = current_jump_multiplier * pixelsToMeters
+        # Player initiated jump: immediately set jump animation
+        if heroFacingLeft:
+            heroCurrentAction = ActionKind.JumpingLeft
+        else:
+            heroCurrentAction = ActionKind.JumpingRight
+        animation.set_action(hero, heroCurrentAction)
+        # prevent the coyote window from considering the player grounded right after the intentional jump
+        lastGroundedTime = 0
     elif canDoubleJump:
         doubleJumpSpeed = -5 * pixelsToMeters
         # Good double jump
@@ -244,6 +299,12 @@ def attemptJump():
             scene.camera_shake(2, 250)
         hero.vy = doubleJumpSpeed
         canDoubleJump = False
+        # force jump animation on double jump too
+        if heroFacingLeft:
+            heroCurrentAction = ActionKind.JumpingLeft
+        else:
+            heroCurrentAction = ActionKind.JumpingRight
+        animation.set_action(hero, heroCurrentAction)
 
 
 #### Level Setup ####
@@ -304,7 +365,7 @@ def createEnemies():
 
 
 def createPlayer(player2: Sprite, speed: number = 100, initialize_stats: bool = True):
-    global canDoubleJump, heroCurrentAction
+    global canDoubleJump, heroCurrentAction, lastGroundedTime
     player2.ay = gravity
     scene.camera_follow_sprite(player2)
     controller.move_sprite(player2, speed, 0)
@@ -321,6 +382,7 @@ def createPlayer(player2: Sprite, speed: number = 100, initialize_stats: bool = 
     else:
         heroCurrentAction = ActionKind.IdleRight
     animation.set_action(player2, heroCurrentAction)
+    lastGroundedTime = game.runtime()
 
 
 def initializeLevel(level2: number):
@@ -347,9 +409,9 @@ def spawnGoals():
         tiles.set_tile_at(value7, myTiles.tile0)
 
 
-#### Switching characters (Mario <-> Luigi) ####
+#### Switching characters (Mario <-> Luigi <-> Wario) ####
 def switch_character():
-    global hero, heroIsLuigi, current_speed, current_jump_multiplier, current_traction, heroCurrentAction
+    global hero, current_character, current_speed, current_jump_multiplier, current_traction, heroCurrentAction, lastGroundedTime
     # Save state
     saved_x = hero.x
     saved_y = hero.y
@@ -358,31 +420,16 @@ def switch_character():
     saved_life = info.life()
     saved_score = info.score()
     saved_facing_left = heroFacingLeft
+    saved_char = current_character
 
     # Destroy old hero sprite
     hero.destroy()
 
-    # Toggle
-    heroIsLuigi = not heroIsLuigi
+    # Cycle to next character
+    current_character = (current_character + 1) % 3
 
-    # Create new sprite with appropriate idle image depending on facing
-    if heroIsLuigi:
-        # create Luigi
-        if saved_facing_left:
-            new_image = assets.image("Luigi_IdleLeft")
-            heroCurrentAction = ActionKind.IdleLeft
-        else:
-            new_image = assets.image("Luigi_IdleRight")
-            heroCurrentAction = ActionKind.IdleRight
-        hero = sprites.create(new_image, SpriteKind.player)
-        # Set character-specific parameters
-        current_speed = luigi_speed
-        current_jump_multiplier = luigi_jump_multiplier
-        current_traction = luigi_traction
-        # Attach animations for Luigi
-        attach_luigi_animations_to(hero)
-    else:
-        # create Mario
+    # Create new sprite with appropriate idle image depending on facing and character
+    if current_character == CHAR_MARIO:
         if saved_facing_left:
             new_image = assets.image("Mario_IdleLeft")
             heroCurrentAction = ActionKind.IdleLeft
@@ -394,6 +441,30 @@ def switch_character():
         current_jump_multiplier = mario_jump_multiplier
         current_traction = mario_traction
         attach_mario_animations_to(hero)
+    elif current_character == CHAR_LUIGI:
+        if saved_facing_left:
+            new_image = assets.image("Luigi_IdleLeft")
+            heroCurrentAction = ActionKind.IdleLeft
+        else:
+            new_image = assets.image("Luigi_IdleRight")
+            heroCurrentAction = ActionKind.IdleRight
+        hero = sprites.create(new_image, SpriteKind.player)
+        current_speed = luigi_speed
+        current_jump_multiplier = luigi_jump_multiplier
+        current_traction = luigi_traction
+        attach_luigi_animations_to(hero)
+    else:  # CHAR_WARIO
+        if saved_facing_left:
+            new_image = assets.image("Wario_IdleLeft")
+            heroCurrentAction = ActionKind.IdleLeft
+        else:
+            new_image = assets.image("Wario_IdleRight")
+            heroCurrentAction = ActionKind.IdleRight
+        hero = sprites.create(new_image, SpriteKind.player)
+        current_speed = wario_speed
+        current_jump_multiplier = wario_jump_multiplier
+        current_traction = wario_traction
+        attach_wario_animations_to(hero)
 
     # Restore position and motion
     hero.x = saved_x
@@ -410,6 +481,7 @@ def switch_character():
 
     # Ensure the hero has the correct current animation action set
     animation.set_action(hero, heroCurrentAction)
+    lastGroundedTime = game.runtime()
 
 
 def on_b_pressed():
@@ -451,11 +523,12 @@ def on_update2():
 game.on_update(on_update2)
 
 
-# Reset double jump when standing on ground
+# Reset double jump when standing on ground and update grounded timestamp
 def on_update3():
-    global canDoubleJump
+    global canDoubleJump, lastGroundedTime
     if hero.is_hitting_tile(CollisionDirection.BOTTOM):
         canDoubleJump = True
+        lastGroundedTime = game.runtime()
 
 game.on_update(on_update3)
 
@@ -473,17 +546,19 @@ def on_update4():
     if hero.is_hitting_tile(CollisionDirection.TOP):
         hero.vy = 0
 
-    # Decide desired action. Use grounded check (is_hitting_tile(BOTTOM)) to determine airborne.
-    grounded = hero.is_hitting_tile(CollisionDirection.BOTTOM)
+    # Decide desired action. Use grounded check (is_hitting_tile(BOTTOM))
+    # but allow a short grace window after leaving ground so small hops/bumps don't flicker animation.
+    grounded_now = hero.is_hitting_tile(CollisionDirection.BOTTOM)
+    grounded_effective = grounded_now or (game.runtime() - lastGroundedTime <= animationCoyoteMs)
 
-    if not grounded:
-        # If airborne, always use jumping animation (prevents flicker between run and jump)
+    if not grounded_effective:
+        # If effectively airborne, always use jumping animation (prevents flicker between run and jump)
         if heroFacingLeft:
             desired_action = ActionKind.JumpingLeft
         else:
             desired_action = ActionKind.JumpingRight
     else:
-        # Grounded: choose running or idle based on vx
+        # Grounded (or in coyote window): choose running or idle based on vx
         if hero.vx < 0:
             desired_action = ActionKind.RunningLeft
         elif hero.vx > 0:
@@ -500,7 +575,7 @@ def on_update4():
         heroCurrentAction = desired_action
 
     # Traction: when on ground and player isn't pressing left/right, apply friction
-    if grounded:
+    if grounded_now:  # only apply traction if actually on ground (not in coyote)
         left_pressed = controller.left.is_pressed()
         right_pressed = controller.right.is_pressed()
         if not left_pressed and not right_pressed:
