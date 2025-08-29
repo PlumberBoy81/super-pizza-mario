@@ -43,11 +43,11 @@ mainCrouchLeft = None
 # Character-specific gameplay parameters
 heroIsLuigi = False
 mario_speed = 100
-luigi_speed = 100             # Luigi slightly faster
+luigi_speed = 110             # Luigi slightly faster
 mario_jump_multiplier = -4.0    # base jump multiplier (will be multiplied by pixelsToMeters)
-luigi_jump_multiplier = -4.0    # Luigi higher jump
+luigi_jump_multiplier = -5.0    # Luigi higher jump
 mario_traction = 0.8            # higher traction => quicker stopping
-luigi_traction = 0.8          # lower traction => more slippery
+luigi_traction = 0.9          # lower traction => more slippery
 current_speed = mario_speed
 current_jump_multiplier = mario_jump_multiplier
 current_traction = mario_traction

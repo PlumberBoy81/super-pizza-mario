@@ -167,15 +167,15 @@ let mainCrouchLeft = null
 //  Character-specific gameplay parameters
 let heroIsLuigi = false
 let mario_speed = 100
-let luigi_speed = 100
+let luigi_speed = 110
 //  Luigi slightly faster
 let mario_jump_multiplier = -4.0
 //  base jump multiplier (will be multiplied by pixelsToMeters)
-let luigi_jump_multiplier = -4.0
+let luigi_jump_multiplier = -5.0
 //  Luigi higher jump
 let mario_traction = 0.8
 //  higher traction => quicker stopping
-let luigi_traction = 0.8
+let luigi_traction = 0.9
 //  lower traction => more slippery
 let current_speed = mario_speed
 let current_jump_multiplier = mario_jump_multiplier
