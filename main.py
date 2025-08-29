@@ -10,6 +10,7 @@ class ActionKind(Enum):
     CrouchRight = 8
     Flying = 9
     Jumping = 10
+
 @namespace
 class SpriteKind:
     Bumper = SpriteKind.create()
@@ -24,16 +25,11 @@ coin: Sprite = None
 playerStartLocation: tiles.Location = None
 flier: Sprite = None
 bumper: Sprite = None
-mainJumpRight: animation.Animation = None
-mainJumpLeft: animation.Animation = None
-mainRunRight: animation.Animation = None
-mainRunLeft: animation.Animation = None
+# Mario animations (not global objects; created & attached per sprite)
+# Luigi animations will be created & attached per sprite as well
+
 flierIdle: animation.Animation = None
 flierFlying: animation.Animation = None
-mainIdleRight: animation.Animation = None
-mainIdleLeft: animation.Animation = None
-doubleJumpSpeed = 0
-canDoubleJump = False
 coinAnimation: animation.Animation = None
 currentLevel = 0
 levelCount = 0
@@ -43,23 +39,38 @@ invincibilityPeriod = 0
 hero: Sprite = None
 mainCrouchRight = None
 mainCrouchLeft = None
+
+# Character-specific gameplay parameters
+heroIsLuigi = False
+mario_speed = 100
+luigi_speed = 100             # Luigi slightly faster
+mario_jump_multiplier = -4.0    # base jump multiplier (will be multiplied by pixelsToMeters)
+luigi_jump_multiplier = -4.0    # Luigi higher jump
+mario_traction = 0.8            # higher traction => quicker stopping
+luigi_traction = 0.8          # lower traction => more slippery
+current_speed = mario_speed
+current_jump_multiplier = mario_jump_multiplier
+current_traction = mario_traction
+
+# Double-jump state variables (were missing)
+doubleJumpSpeed = 0
+canDoubleJump = True
+
+# Create the initial hero sprite (Mario by default)
 hero = sprites.create(assets.image("Mario_IdleRight"), SpriteKind.player)
 invincibilityPeriod = 600  # how long to pause between each contact with a single enemy
 pixelsToMeters = 30
 gravity = 9.81 * pixelsToMeters
 scene.set_background_color(9)
-initializeAnimations()
-createPlayer(hero)
-levelCount = 4
-currentLevel = 0
-setLevelTileMap(currentLevel)
 
 
-#### Initialize Animations ####
+#### Animation initialization and helpers ####
 def initializeAnimations():
-    initializeHeroAnimations()
     initializeCoinAnimation()
     initializeFlierAnimations()
+    # Attach Mario animations to the initial hero (Mario)
+    attach_mario_animations_to(hero)
+
 
 def initializeCoinAnimation():
     global coinAnimation
@@ -68,10 +79,6 @@ def initializeCoinAnimation():
         Coin
         """))
 
-def initializeHeroAnimations():
-    animateRun()
-    animateIdle()
-    animateJumps()
 
 def initializeFlierAnimations():
     global flierFlying, flierIdle
@@ -87,44 +94,71 @@ def initializeFlierAnimations():
         squid
         """))
 
-def animateIdle():
-    global mainIdleLeft, mainIdleRight
-    mainIdleLeft = animation.create_animation(ActionKind.IdleLeft, 100)
-    animation.attach_animation(hero, mainIdleLeft)
-    mainIdleLeft.add_animation_frame(assets.image("""
-        Mario_IdleLeft
-        """))
-    mainIdleRight = animation.create_animation(ActionKind.IdleRight, 100)
-    animation.attach_animation(hero, mainIdleRight)
-    mainIdleRight.add_animation_frame(assets.image("""
-        Mario_IdleRight
-        """))
 
-def animateRun():
-    global mainRunLeft, mainRunRight
+def attach_mario_animations_to(s: Sprite):
+    # Idle
+    mainIdleLeft = animation.create_animation(ActionKind.IdleLeft, 100)
+    animation.attach_animation(s, mainIdleLeft)
+    mainIdleLeft.add_animation_frame(assets.image("Mario_IdleLeft"))
+
+    mainIdleRight = animation.create_animation(ActionKind.IdleRight, 100)
+    animation.attach_animation(s, mainIdleRight)
+    mainIdleRight.add_animation_frame(assets.image("Mario_IdleRight"))
+
+    # Run
     mainRunLeft = animation.create_animation(ActionKind.RunningLeft, 200)
-    animation.attach_animation(hero, mainRunLeft)
+    animation.attach_animation(s, mainRunLeft)
     mainRunLeft.add_animation_frame(assets.image("Mario_RunLeft0"))
     mainRunLeft.add_animation_frame(assets.image("Mario_RunLeft1"))
     mainRunLeft.add_animation_frame(assets.image("Mario_RunLeft2"))
+
     mainRunRight = animation.create_animation(ActionKind.RunningRight, 200)
-    animation.attach_animation(hero, mainRunRight)
+    animation.attach_animation(s, mainRunRight)
     mainRunRight.add_animation_frame(assets.image("Mario_RunRight0"))
     mainRunRight.add_animation_frame(assets.image("Mario_RunRight1"))
     mainRunRight.add_animation_frame(assets.image("Mario_RunRight2"))
 
-def animateJumps():
-    global mainJumpLeft, mainJumpRight
+    # Jump
     mainJumpLeft = animation.create_animation(ActionKind.JumpingLeft, 100)
-    animation.attach_animation(hero, mainJumpLeft)
-    mainJumpLeft.add_animation_frame(assets.image("""
-        Mario_JumpLeft
-        """))
+    animation.attach_animation(s, mainJumpLeft)
+    mainJumpLeft.add_animation_frame(assets.image("Mario_JumpLeft"))
+
     mainJumpRight = animation.create_animation(ActionKind.JumpingRight, 100)
-    animation.attach_animation(hero, mainJumpRight)
-    mainJumpRight.add_animation_frame(assets.image("""
-        Mario_JumpRight
-        """))
+    animation.attach_animation(s, mainJumpRight)
+    mainJumpRight.add_animation_frame(assets.image("Mario_JumpRight"))
+
+
+def attach_luigi_animations_to(s: Sprite):
+    # Idle
+    luigiIdleLeft = animation.create_animation(ActionKind.IdleLeft, 100)
+    animation.attach_animation(s, luigiIdleLeft)
+    luigiIdleLeft.add_animation_frame(assets.image("Luigi_IdleLeft"))
+
+    luigiIdleRight = animation.create_animation(ActionKind.IdleRight, 100)
+    animation.attach_animation(s, luigiIdleRight)
+    luigiIdleRight.add_animation_frame(assets.image("Luigi_IdleRight"))
+
+    # Run (3 frames each direction)
+    luigiRunLeft = animation.create_animation(ActionKind.RunningLeft, 180)
+    animation.attach_animation(s, luigiRunLeft)
+    luigiRunLeft.add_animation_frame(assets.image("Luigi_RunLeft0"))
+    luigiRunLeft.add_animation_frame(assets.image("Luigi_RunLeft1"))
+    luigiRunLeft.add_animation_frame(assets.image("Luigi_RunLeft2"))
+
+    luigiRunRight = animation.create_animation(ActionKind.RunningRight, 180)
+    animation.attach_animation(s, luigiRunRight)
+    luigiRunRight.add_animation_frame(assets.image("Luigi_RunRight0"))
+    luigiRunRight.add_animation_frame(assets.image("Luigi_RunRight1"))
+    luigiRunRight.add_animation_frame(assets.image("Luigi_RunRight2"))
+
+    # Jump
+    luigiJumpLeft = animation.create_animation(ActionKind.JumpingLeft, 100)
+    animation.attach_animation(s, luigiJumpLeft)
+    luigiJumpLeft.add_animation_frame(assets.image("Luigi_JumpLeft"))
+
+    luigiJumpRight = animation.create_animation(ActionKind.JumpingRight, 100)
+    animation.attach_animation(s, luigiJumpRight)
+    luigiJumpRight.add_animation_frame(assets.image("Luigi_JumpRight"))
 
 
 #### Collisions ####
@@ -137,7 +171,9 @@ def on_overlap_tile(sprite, location):
         setLevelTileMap(currentLevel)
     else:
         game.over(True, effects.confetti)
+
 scene.on_overlap_tile(SpriteKind.player, myTiles.tile1, on_overlap_tile)
+
 
 # Enemy stomp
 def overlap_enemy(sprite, otherSprite):
@@ -152,8 +188,10 @@ def overlap_enemy(sprite, otherSprite):
         sprite.say("Mamma mia!", invincibilityPeriod)
         music.power_down.play()
         pause(invincibilityPeriod)
+
 sprites.on_overlap(SpriteKind.player, SpriteKind.Bumper, overlap_enemy)
 sprites.on_overlap(SpriteKind.player, SpriteKind.Flier, overlap_enemy)
+
 
 # Coin
 def overlap_coin(sprite, otherSprite):
@@ -161,28 +199,35 @@ def overlap_coin(sprite, otherSprite):
     otherSprite.y += -3
     info.change_score_by(1)
     music.ba_ding.play()
+
 sprites.on_overlap(SpriteKind.player, SpriteKind.Coin, overlap_coin)
 
 
 #### Input ####
 def on_up_pressed():
     attemptJump()
+
 controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
+
 
 def on_a_pressed():
     attemptJump()
+
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
+
 
 def on_down_pressed():
     if not (hero.is_hitting_tile(CollisionDirection.BOTTOM)):
         hero.vy += 80
+
 controller.down.on_event(ControllerButtonEvent.PRESSED, on_down_pressed)
+
 
 def attemptJump():
     global doubleJumpSpeed, canDoubleJump
-    # else if: either fell off a ledge, or double jumping
+    # ground jump
     if hero.is_hitting_tile(CollisionDirection.BOTTOM):
-        hero.vy = -4 * pixelsToMeters
+        hero.vy = current_jump_multiplier * pixelsToMeters
     elif canDoubleJump:
         doubleJumpSpeed = -5 * pixelsToMeters
         # Good double jump
@@ -217,6 +262,7 @@ def setLevelTileMap(level: number):
         pass
     initializeLevel(level)
 
+
 def clearGame():
     for value in sprites.all_of_kind(SpriteKind.Bumper):
         value.destroy()
@@ -226,6 +272,7 @@ def clearGame():
         value3.destroy()
     for value4 in sprites.all_of_kind(SpriteKind.Flier):
         value4.destroy()
+
 
 def createEnemies():
     global bumper, flier
@@ -248,13 +295,17 @@ def createEnemies():
         animation.attach_animation(flier, flierFlying)
         animation.attach_animation(flier, flierIdle)
 
-def createPlayer(player2: Sprite):
+
+def createPlayer(player2: Sprite, speed: number = 100, initialize_stats: bool = True):
     player2.ay = gravity
     scene.camera_follow_sprite(player2)
-    controller.move_sprite(player2, 100, 0)
+    controller.move_sprite(player2, speed, 0)
     player2.z = 5
-    info.set_life(3)
-    info.set_score(0)
+    # Only initialize life/score when creating initial player
+    if initialize_stats:
+        info.set_life(3)
+        info.set_score(0)
+
 
 def initializeLevel(level2: number):
     global playerStartLocation
@@ -265,8 +316,10 @@ def initializeLevel(level2: number):
     createEnemies()
     spawnGoals()
 
+
 def hasNextLevel():
     return currentLevel != levelCount
+
 
 def spawnGoals():
     global coin
@@ -278,6 +331,74 @@ def spawnGoals():
         tiles.set_tile_at(value7, myTiles.tile0)
 
 
+#### Switching characters (Mario <-> Luigi) ####
+def switch_character():
+    global hero, heroIsLuigi, current_speed, current_jump_multiplier, current_traction
+    # Save state
+    saved_x = hero.x
+    saved_y = hero.y
+    saved_vx = hero.vx
+    saved_vy = hero.vy
+    saved_life = info.life()
+    saved_score = info.score()
+    saved_facing_left = heroFacingLeft
+
+    # Destroy old hero sprite
+    hero.destroy()
+
+    # Toggle
+    heroIsLuigi = not heroIsLuigi
+
+    # Create new sprite with appropriate idle image depending on facing
+    if heroIsLuigi:
+        # create Luigi
+        if saved_facing_left:
+            new_image = assets.image("Luigi_IdleLeft")
+        else:
+            new_image = assets.image("Luigi_IdleRight")
+        hero = sprites.create(new_image, SpriteKind.player)
+        # Set character-specific parameters
+        current_speed = luigi_speed
+        current_jump_multiplier = luigi_jump_multiplier
+        current_traction = luigi_traction
+        # Attach animations for Luigi
+        attach_luigi_animations_to(hero)
+    else:
+        # create Mario
+        if saved_facing_left:
+            new_image = assets.image("Mario_IdleLeft")
+        else:
+            new_image = assets.image("Mario_IdleRight")
+        hero = sprites.create(new_image, SpriteKind.player)
+        current_speed = mario_speed
+        current_jump_multiplier = mario_jump_multiplier
+        current_traction = mario_traction
+        attach_mario_animations_to(hero)
+
+    # Restore position and motion
+    hero.x = saved_x
+    hero.y = saved_y
+    hero.vx = saved_vx
+    hero.vy = saved_vy
+
+    # Recreate player physics & controller binding without resetting life/score
+    createPlayer(hero, current_speed, initialize_stats=False)
+
+    # Restore life & score
+    info.set_life(saved_life)
+    info.set_score(saved_score)
+
+    # Re-attach flier animations (they were attached to the flier sprites themselves earlier)
+    # Camera follow and z already set in createPlayer()
+    # done
+
+
+def on_b_pressed():
+    switch_character()
+
+controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
+
+
 #### Update ####
 # bumper movement
 def on_update():
@@ -286,7 +407,9 @@ def on_update():
             value9.vx = 30
         elif value9.is_hitting_tile(CollisionDirection.RIGHT):
             value9.vx = -30
+
 game.on_update(on_update)
+
 
 # Flier movement
 def on_update2():
@@ -305,24 +428,33 @@ def on_update2():
             value8.vy = -20
             value8.vx = 0
             animation.set_action(value8, ActionKind.Idle)
+
 game.on_update(on_update2)
+
 
 # Reset double jump when standing on wall
 def on_update3():
     global canDoubleJump
     if hero.is_hitting_tile(CollisionDirection.BOTTOM):
         canDoubleJump = True
+
 game.on_update(on_update3)
 
-# set up hero animations
+
+# set up hero animations and apply traction
 def on_update4():
     global heroFacingLeft
+    # Update facing based on vx
     if hero.vx < 0:
         heroFacingLeft = True
     elif hero.vx > 0:
         heroFacingLeft = False
+
+    # Prevent sticking into the top of tiles
     if hero.is_hitting_tile(CollisionDirection.TOP):
         hero.vy = 0
+
+    # Set jumping animations if airborne
     if hero.vy < 20 and not (hero.is_hitting_tile(CollisionDirection.BOTTOM)):
         if heroFacingLeft:
             animation.set_action(hero, ActionKind.JumpingLeft)
@@ -337,4 +469,25 @@ def on_update4():
             animation.set_action(hero, ActionKind.IdleLeft)
         else:
             animation.set_action(hero, ActionKind.IdleRight)
+
+    # Traction: when on ground and player isn't pressing left/right, apply friction
+    if hero.is_hitting_tile(CollisionDirection.BOTTOM):
+        left_pressed = controller.left.is_pressed()
+        right_pressed = controller.right.is_pressed()
+        if not left_pressed and not right_pressed:
+            # apply traction (slows the hero)
+            hero.vx = int(hero.vx * current_traction)
+            # snap to zero when very small
+            if abs(hero.vx) < 5:
+                hero.vx = 0
+
 game.on_update(on_update4)
+
+
+#### Setup initial game state ####
+initializeAnimations()
+# createPlayer called to set initial controls & stats (Mario)
+createPlayer(hero, current_speed, initialize_stats=True)
+levelCount = 4
+currentLevel = 0
+setLevelTileMap(currentLevel)

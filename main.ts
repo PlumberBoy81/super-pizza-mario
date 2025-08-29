@@ -151,16 +151,10 @@ let coin : Sprite = null
 let playerStartLocation : tiles.Location = null
 let flier : Sprite = null
 let bumper : Sprite = null
-let mainJumpRight : animation.Animation = null
-let mainJumpLeft : animation.Animation = null
-let mainRunRight : animation.Animation = null
-let mainRunLeft : animation.Animation = null
+//  Mario animations (not global objects; created & attached per sprite)
+//  Luigi animations will be created & attached per sprite as well
 let flierIdle : animation.Animation = null
 let flierFlying : animation.Animation = null
-let mainIdleRight : animation.Animation = null
-let mainIdleLeft : animation.Animation = null
-let doubleJumpSpeed = 0
-let canDoubleJump = false
 let coinAnimation : animation.Animation = null
 let currentLevel = 0
 let levelCount = 0
@@ -170,22 +164,38 @@ let invincibilityPeriod = 0
 let hero : Sprite = null
 let mainCrouchRight = null
 let mainCrouchLeft = null
+//  Character-specific gameplay parameters
+let heroIsLuigi = false
+let mario_speed = 100
+let luigi_speed = 100
+//  Luigi slightly faster
+let mario_jump_multiplier = -4.0
+//  base jump multiplier (will be multiplied by pixelsToMeters)
+let luigi_jump_multiplier = -4.0
+//  Luigi higher jump
+let mario_traction = 0.8
+//  higher traction => quicker stopping
+let luigi_traction = 0.8
+//  lower traction => more slippery
+let current_speed = mario_speed
+let current_jump_multiplier = mario_jump_multiplier
+let current_traction = mario_traction
+//  Double-jump state variables (were missing)
+let doubleJumpSpeed = 0
+let canDoubleJump = true
+//  Create the initial hero sprite (Mario by default)
 hero = sprites.create(assets.image`Mario_IdleRight`, SpriteKind.Player)
 invincibilityPeriod = 600
 //  how long to pause between each contact with a single enemy
 pixelsToMeters = 30
 gravity = 9.81 * pixelsToMeters
 scene.setBackgroundColor(9)
-initializeAnimations()
-createPlayer(hero)
-levelCount = 4
-currentLevel = 0
-setLevelTileMap(currentLevel)
-// ### Initialize Animations ####
+// ### Animation initialization and helpers ####
 function initializeAnimations() {
-    initializeHeroAnimations()
     initializeCoinAnimation()
     initializeFlierAnimations()
+    //  Attach Mario animations to the initial hero (Mario)
+    attach_mario_animations_to(hero)
 }
 
 function initializeCoinAnimation() {
@@ -194,12 +204,6 @@ function initializeCoinAnimation() {
     coinAnimation.addAnimationFrame(assets.image`
         Coin
         `)
-}
-
-function initializeHeroAnimations() {
-    animateRun()
-    animateIdle()
-    animateJumps()
 }
 
 function initializeFlierAnimations() {
@@ -217,46 +221,60 @@ function initializeFlierAnimations() {
         `)
 }
 
-function animateIdle() {
-    
-    mainIdleLeft = animation.createAnimation(ActionKind.IdleLeft, 100)
-    animation.attachAnimation(hero, mainIdleLeft)
-    mainIdleLeft.addAnimationFrame(assets.image`
-        Mario_IdleLeft
-        `)
-    mainIdleRight = animation.createAnimation(ActionKind.IdleRight, 100)
-    animation.attachAnimation(hero, mainIdleRight)
-    mainIdleRight.addAnimationFrame(assets.image`
-        Mario_IdleRight
-        `)
-}
-
-function animateRun() {
-    
-    mainRunLeft = animation.createAnimation(ActionKind.RunningLeft, 200)
-    animation.attachAnimation(hero, mainRunLeft)
+function attach_mario_animations_to(s: Sprite) {
+    //  Idle
+    let mainIdleLeft = animation.createAnimation(ActionKind.IdleLeft, 100)
+    animation.attachAnimation(s, mainIdleLeft)
+    mainIdleLeft.addAnimationFrame(assets.image`Mario_IdleLeft`)
+    let mainIdleRight = animation.createAnimation(ActionKind.IdleRight, 100)
+    animation.attachAnimation(s, mainIdleRight)
+    mainIdleRight.addAnimationFrame(assets.image`Mario_IdleRight`)
+    //  Run
+    let mainRunLeft = animation.createAnimation(ActionKind.RunningLeft, 200)
+    animation.attachAnimation(s, mainRunLeft)
     mainRunLeft.addAnimationFrame(assets.image`Mario_RunLeft0`)
     mainRunLeft.addAnimationFrame(assets.image`Mario_RunLeft1`)
     mainRunLeft.addAnimationFrame(assets.image`Mario_RunLeft2`)
-    mainRunRight = animation.createAnimation(ActionKind.RunningRight, 200)
-    animation.attachAnimation(hero, mainRunRight)
+    let mainRunRight = animation.createAnimation(ActionKind.RunningRight, 200)
+    animation.attachAnimation(s, mainRunRight)
     mainRunRight.addAnimationFrame(assets.image`Mario_RunRight0`)
     mainRunRight.addAnimationFrame(assets.image`Mario_RunRight1`)
     mainRunRight.addAnimationFrame(assets.image`Mario_RunRight2`)
+    //  Jump
+    let mainJumpLeft = animation.createAnimation(ActionKind.JumpingLeft, 100)
+    animation.attachAnimation(s, mainJumpLeft)
+    mainJumpLeft.addAnimationFrame(assets.image`Mario_JumpLeft`)
+    let mainJumpRight = animation.createAnimation(ActionKind.JumpingRight, 100)
+    animation.attachAnimation(s, mainJumpRight)
+    mainJumpRight.addAnimationFrame(assets.image`Mario_JumpRight`)
 }
 
-function animateJumps() {
-    
-    mainJumpLeft = animation.createAnimation(ActionKind.JumpingLeft, 100)
-    animation.attachAnimation(hero, mainJumpLeft)
-    mainJumpLeft.addAnimationFrame(assets.image`
-        Mario_JumpLeft
-        `)
-    mainJumpRight = animation.createAnimation(ActionKind.JumpingRight, 100)
-    animation.attachAnimation(hero, mainJumpRight)
-    mainJumpRight.addAnimationFrame(assets.image`
-        Mario_JumpRight
-        `)
+function attach_luigi_animations_to(s: Sprite) {
+    //  Idle
+    let luigiIdleLeft = animation.createAnimation(ActionKind.IdleLeft, 100)
+    animation.attachAnimation(s, luigiIdleLeft)
+    luigiIdleLeft.addAnimationFrame(assets.image`Luigi_IdleLeft`)
+    let luigiIdleRight = animation.createAnimation(ActionKind.IdleRight, 100)
+    animation.attachAnimation(s, luigiIdleRight)
+    luigiIdleRight.addAnimationFrame(assets.image`Luigi_IdleRight`)
+    //  Run (3 frames each direction)
+    let luigiRunLeft = animation.createAnimation(ActionKind.RunningLeft, 180)
+    animation.attachAnimation(s, luigiRunLeft)
+    luigiRunLeft.addAnimationFrame(assets.image`Luigi_RunLeft0`)
+    luigiRunLeft.addAnimationFrame(assets.image`Luigi_RunLeft1`)
+    luigiRunLeft.addAnimationFrame(assets.image`Luigi_RunLeft2`)
+    let luigiRunRight = animation.createAnimation(ActionKind.RunningRight, 180)
+    animation.attachAnimation(s, luigiRunRight)
+    luigiRunRight.addAnimationFrame(assets.image`Luigi_RunRight0`)
+    luigiRunRight.addAnimationFrame(assets.image`Luigi_RunRight1`)
+    luigiRunRight.addAnimationFrame(assets.image`Luigi_RunRight2`)
+    //  Jump
+    let luigiJumpLeft = animation.createAnimation(ActionKind.JumpingLeft, 100)
+    animation.attachAnimation(s, luigiJumpLeft)
+    luigiJumpLeft.addAnimationFrame(assets.image`Luigi_JumpLeft`)
+    let luigiJumpRight = animation.createAnimation(ActionKind.JumpingRight, 100)
+    animation.attachAnimation(s, luigiJumpRight)
+    luigiJumpRight.addAnimationFrame(assets.image`Luigi_JumpRight`)
 }
 
 // ### Collisions ####
@@ -313,9 +331,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function on_down_pressed(
 })
 function attemptJump() {
     
-    //  else if: either fell off a ledge, or double jumping
+    //  ground jump
     if (hero.isHittingTile(CollisionDirection.Bottom)) {
-        hero.vy = -4 * pixelsToMeters
+        hero.vy = current_jump_multiplier * pixelsToMeters
     } else if (canDoubleJump) {
         doubleJumpSpeed = -5 * pixelsToMeters
         //  Good double jump
@@ -396,13 +414,17 @@ function createEnemies() {
     }
 }
 
-function createPlayer(player2: Sprite) {
+function createPlayer(player2: Sprite, speed: number = 100, initialize_stats: boolean = true) {
     player2.ay = gravity
     scene.cameraFollowSprite(player2)
-    controller.moveSprite(player2, 100, 0)
+    controller.moveSprite(player2, speed, 0)
     player2.z = 5
-    info.setLife(3)
-    info.setScore(0)
+    //  Only initialize life/score when creating initial player
+    if (initialize_stats) {
+        info.setLife(3)
+        info.setScore(0)
+    }
+    
 }
 
 function initializeLevel(level2: number) {
@@ -430,6 +452,71 @@ function spawnGoals() {
     }
 }
 
+// ### Switching characters (Mario <-> Luigi) ####
+function switch_character() {
+    let new_image: Image;
+    
+    //  Save state
+    let saved_x = hero.x
+    let saved_y = hero.y
+    let saved_vx = hero.vx
+    let saved_vy = hero.vy
+    let saved_life = info.life()
+    let saved_score = info.score()
+    let saved_facing_left = heroFacingLeft
+    //  Destroy old hero sprite
+    hero.destroy()
+    //  Toggle
+    heroIsLuigi = !heroIsLuigi
+    //  Create new sprite with appropriate idle image depending on facing
+    if (heroIsLuigi) {
+        //  create Luigi
+        if (saved_facing_left) {
+            new_image = assets.image`Luigi_IdleLeft`
+        } else {
+            new_image = assets.image`Luigi_IdleRight`
+        }
+        
+        hero = sprites.create(new_image, SpriteKind.Player)
+        //  Set character-specific parameters
+        current_speed = luigi_speed
+        current_jump_multiplier = luigi_jump_multiplier
+        current_traction = luigi_traction
+        //  Attach animations for Luigi
+        attach_luigi_animations_to(hero)
+    } else {
+        //  create Mario
+        if (saved_facing_left) {
+            new_image = assets.image`Mario_IdleLeft`
+        } else {
+            new_image = assets.image`Mario_IdleRight`
+        }
+        
+        hero = sprites.create(new_image, SpriteKind.Player)
+        current_speed = mario_speed
+        current_jump_multiplier = mario_jump_multiplier
+        current_traction = mario_traction
+        attach_mario_animations_to(hero)
+    }
+    
+    //  Restore position and motion
+    hero.x = saved_x
+    hero.y = saved_y
+    hero.vx = saved_vx
+    hero.vy = saved_vy
+    //  Recreate player physics & controller binding without resetting life/score
+    createPlayer(hero, current_speed, false)
+    //  Restore life & score
+    info.setLife(saved_life)
+    info.setScore(saved_score)
+}
+
+//  Re-attach flier animations (they were attached to the flier sprites themselves earlier)
+//  Camera follow and z already set in createPlayer()
+//  done
+controller.B.onEvent(ControllerButtonEvent.Pressed, function on_b_pressed() {
+    switch_character()
+})
 // ### Update ####
 //  bumper movement
 game.onUpdate(function on_update() {
@@ -475,19 +562,24 @@ game.onUpdate(function on_update3() {
     }
     
 })
-//  set up hero animations
+//  set up hero animations and apply traction
 game.onUpdate(function on_update4() {
+    let left_pressed: boolean;
+    let right_pressed: boolean;
     
+    //  Update facing based on vx
     if (hero.vx < 0) {
         heroFacingLeft = true
     } else if (hero.vx > 0) {
         heroFacingLeft = false
     }
     
+    //  Prevent sticking into the top of tiles
     if (hero.isHittingTile(CollisionDirection.Top)) {
         hero.vy = 0
     }
     
+    //  Set jumping animations if airborne
     if (hero.vy < 20 && !hero.isHittingTile(CollisionDirection.Bottom)) {
         if (heroFacingLeft) {
             animation.setAction(hero, ActionKind.JumpingLeft)
@@ -505,4 +597,27 @@ game.onUpdate(function on_update4() {
         animation.setAction(hero, ActionKind.IdleRight)
     }
     
+    //  Traction: when on ground and player isn't pressing left/right, apply friction
+    if (hero.isHittingTile(CollisionDirection.Bottom)) {
+        left_pressed = controller.left.isPressed()
+        right_pressed = controller.right.isPressed()
+        if (!left_pressed && !right_pressed) {
+            //  apply traction (slows the hero)
+            hero.vx = Math.trunc(hero.vx * current_traction)
+            //  snap to zero when very small
+            if (Math.abs(hero.vx) < 5) {
+                hero.vx = 0
+            }
+            
+        }
+        
+    }
+    
 })
+// ### Setup initial game state ####
+initializeAnimations()
+//  createPlayer called to set initial controls & stats (Mario)
+createPlayer(hero, current_speed, true)
+levelCount = 4
+currentLevel = 0
+setLevelTileMap(currentLevel)
