@@ -164,10 +164,13 @@ let invincibilityPeriod = 0
 let hero : Sprite = null
 let mainCrouchRight = null
 let mainCrouchLeft = null
+//  Double-jump state variables
+let doubleJumpSpeed = 0
+let canDoubleJump = true
 //  Character-specific gameplay parameters
 let heroIsLuigi = false
 let mario_speed = 100
-let luigi_speed = 110
+let luigi_speed = 120
 //  Luigi slightly faster
 let mario_jump_multiplier = -4.0
 //  base jump multiplier (will be multiplied by pixelsToMeters)
@@ -175,14 +178,13 @@ let luigi_jump_multiplier = -5.0
 //  Luigi higher jump
 let mario_traction = 0.8
 //  higher traction => quicker stopping
-let luigi_traction = 0.9
-//  lower traction => more slippery
+let luigi_traction = 0.95
+//  lower traction => more slippery (keeps speed more)
 let current_speed = mario_speed
 let current_jump_multiplier = mario_jump_multiplier
 let current_traction = mario_traction
-//  Double-jump state variables (were missing)
-let doubleJumpSpeed = 0
-let canDoubleJump = true
+//  Keep track of currently set animation action to avoid restarting animations every frame
+let heroCurrentAction = ActionKind.IdleRight
 //  Create the initial hero sprite (Mario by default)
 hero = sprites.create(assets.image`Mario_IdleRight`, SpriteKind.Player)
 invincibilityPeriod = 600
@@ -196,6 +198,10 @@ function initializeAnimations() {
     initializeFlierAnimations()
     //  Attach Mario animations to the initial hero (Mario)
     attach_mario_animations_to(hero)
+    //  initial action
+    
+    heroCurrentAction = ActionKind.IdleRight
+    animation.setAction(hero, heroCurrentAction)
 }
 
 function initializeCoinAnimation() {
@@ -415,6 +421,7 @@ function createEnemies() {
 }
 
 function createPlayer(player2: Sprite, speed: number = 100, initialize_stats: boolean = true) {
+    
     player2.ay = gravity
     scene.cameraFollowSprite(player2)
     controller.moveSprite(player2, speed, 0)
@@ -425,6 +432,16 @@ function createPlayer(player2: Sprite, speed: number = 100, initialize_stats: bo
         info.setScore(0)
     }
     
+    //  Reset double-jump availability when creating player
+    canDoubleJump = true
+    //  Reset current animation action state for the new sprite
+    if (heroFacingLeft) {
+        heroCurrentAction = ActionKind.IdleLeft
+    } else {
+        heroCurrentAction = ActionKind.IdleRight
+    }
+    
+    animation.setAction(player2, heroCurrentAction)
 }
 
 function initializeLevel(level2: number) {
@@ -473,8 +490,10 @@ function switch_character() {
         //  create Luigi
         if (saved_facing_left) {
             new_image = assets.image`Luigi_IdleLeft`
+            heroCurrentAction = ActionKind.IdleLeft
         } else {
             new_image = assets.image`Luigi_IdleRight`
+            heroCurrentAction = ActionKind.IdleRight
         }
         
         hero = sprites.create(new_image, SpriteKind.Player)
@@ -488,8 +507,10 @@ function switch_character() {
         //  create Mario
         if (saved_facing_left) {
             new_image = assets.image`Mario_IdleLeft`
+            heroCurrentAction = ActionKind.IdleLeft
         } else {
             new_image = assets.image`Mario_IdleRight`
+            heroCurrentAction = ActionKind.IdleRight
         }
         
         hero = sprites.create(new_image, SpriteKind.Player)
@@ -509,11 +530,10 @@ function switch_character() {
     //  Restore life & score
     info.setLife(saved_life)
     info.setScore(saved_score)
+    //  Ensure the hero has the correct current animation action set
+    animation.setAction(hero, heroCurrentAction)
 }
 
-//  Re-attach flier animations (they were attached to the flier sprites themselves earlier)
-//  Camera follow and z already set in createPlayer()
-//  done
 controller.B.onEvent(ControllerButtonEvent.Pressed, function on_b_pressed() {
     switch_character()
 })
@@ -554,7 +574,7 @@ game.onUpdate(function on_update2() {
         
     }
 })
-//  Reset double jump when standing on wall
+//  Reset double jump when standing on ground
 game.onUpdate(function on_update3() {
     
     if (hero.isHittingTile(CollisionDirection.Bottom)) {
@@ -564,6 +584,7 @@ game.onUpdate(function on_update3() {
 })
 //  set up hero animations and apply traction
 game.onUpdate(function on_update4() {
+    let desired_action: number;
     let left_pressed: boolean;
     let right_pressed: boolean;
     
@@ -579,26 +600,34 @@ game.onUpdate(function on_update4() {
         hero.vy = 0
     }
     
-    //  Set jumping animations if airborne
-    if (hero.vy < 20 && !hero.isHittingTile(CollisionDirection.Bottom)) {
+    //  Decide desired action. Use grounded check (is_hitting_tile(BOTTOM)) to determine airborne.
+    let grounded = hero.isHittingTile(CollisionDirection.Bottom)
+    if (!grounded) {
+        //  If airborne, always use jumping animation (prevents flicker between run and jump)
         if (heroFacingLeft) {
-            animation.setAction(hero, ActionKind.JumpingLeft)
+            desired_action = ActionKind.JumpingLeft
         } else {
-            animation.setAction(hero, ActionKind.JumpingRight)
+            desired_action = ActionKind.JumpingRight
         }
         
     } else if (hero.vx < 0) {
-        animation.setAction(hero, ActionKind.RunningLeft)
+        desired_action = ActionKind.RunningLeft
     } else if (hero.vx > 0) {
-        animation.setAction(hero, ActionKind.RunningRight)
+        desired_action = ActionKind.RunningRight
     } else if (heroFacingLeft) {
-        animation.setAction(hero, ActionKind.IdleLeft)
+        desired_action = ActionKind.IdleLeft
     } else {
-        animation.setAction(hero, ActionKind.IdleRight)
+        desired_action = ActionKind.IdleRight
+    }
+    
+    //  Only call set_action when the action changes to avoid restarting animations and causing visual glitches
+    if (desired_action != heroCurrentAction) {
+        animation.setAction(hero, desired_action)
+        heroCurrentAction = desired_action
     }
     
     //  Traction: when on ground and player isn't pressing left/right, apply friction
-    if (hero.isHittingTile(CollisionDirection.Bottom)) {
+    if (grounded) {
         left_pressed = controller.left.isPressed()
         right_pressed = controller.right.isPressed()
         if (!left_pressed && !right_pressed) {

@@ -40,21 +40,24 @@ hero: Sprite = None
 mainCrouchRight = None
 mainCrouchLeft = None
 
+# Double-jump state variables
+doubleJumpSpeed = 0
+canDoubleJump = True
+
 # Character-specific gameplay parameters
 heroIsLuigi = False
 mario_speed = 100
-luigi_speed = 110             # Luigi slightly faster
+luigi_speed = 120               # Luigi slightly faster
 mario_jump_multiplier = -4.0    # base jump multiplier (will be multiplied by pixelsToMeters)
 luigi_jump_multiplier = -5.0    # Luigi higher jump
 mario_traction = 0.8            # higher traction => quicker stopping
-luigi_traction = 0.9          # lower traction => more slippery
+luigi_traction = 0.95           # lower traction => more slippery (keeps speed more)
 current_speed = mario_speed
 current_jump_multiplier = mario_jump_multiplier
 current_traction = mario_traction
 
-# Double-jump state variables (were missing)
-doubleJumpSpeed = 0
-canDoubleJump = True
+# Keep track of currently set animation action to avoid restarting animations every frame
+heroCurrentAction = ActionKind.IdleRight
 
 # Create the initial hero sprite (Mario by default)
 hero = sprites.create(assets.image("Mario_IdleRight"), SpriteKind.player)
@@ -70,6 +73,10 @@ def initializeAnimations():
     initializeFlierAnimations()
     # Attach Mario animations to the initial hero (Mario)
     attach_mario_animations_to(hero)
+    # initial action
+    global heroCurrentAction
+    heroCurrentAction = ActionKind.IdleRight
+    animation.set_action(hero, heroCurrentAction)
 
 
 def initializeCoinAnimation():
@@ -297,6 +304,7 @@ def createEnemies():
 
 
 def createPlayer(player2: Sprite, speed: number = 100, initialize_stats: bool = True):
+    global canDoubleJump, heroCurrentAction
     player2.ay = gravity
     scene.camera_follow_sprite(player2)
     controller.move_sprite(player2, speed, 0)
@@ -305,6 +313,14 @@ def createPlayer(player2: Sprite, speed: number = 100, initialize_stats: bool = 
     if initialize_stats:
         info.set_life(3)
         info.set_score(0)
+    # Reset double-jump availability when creating player
+    canDoubleJump = True
+    # Reset current animation action state for the new sprite
+    if heroFacingLeft:
+        heroCurrentAction = ActionKind.IdleLeft
+    else:
+        heroCurrentAction = ActionKind.IdleRight
+    animation.set_action(player2, heroCurrentAction)
 
 
 def initializeLevel(level2: number):
@@ -333,7 +349,7 @@ def spawnGoals():
 
 #### Switching characters (Mario <-> Luigi) ####
 def switch_character():
-    global hero, heroIsLuigi, current_speed, current_jump_multiplier, current_traction
+    global hero, heroIsLuigi, current_speed, current_jump_multiplier, current_traction, heroCurrentAction
     # Save state
     saved_x = hero.x
     saved_y = hero.y
@@ -354,8 +370,10 @@ def switch_character():
         # create Luigi
         if saved_facing_left:
             new_image = assets.image("Luigi_IdleLeft")
+            heroCurrentAction = ActionKind.IdleLeft
         else:
             new_image = assets.image("Luigi_IdleRight")
+            heroCurrentAction = ActionKind.IdleRight
         hero = sprites.create(new_image, SpriteKind.player)
         # Set character-specific parameters
         current_speed = luigi_speed
@@ -367,8 +385,10 @@ def switch_character():
         # create Mario
         if saved_facing_left:
             new_image = assets.image("Mario_IdleLeft")
+            heroCurrentAction = ActionKind.IdleLeft
         else:
             new_image = assets.image("Mario_IdleRight")
+            heroCurrentAction = ActionKind.IdleRight
         hero = sprites.create(new_image, SpriteKind.player)
         current_speed = mario_speed
         current_jump_multiplier = mario_jump_multiplier
@@ -388,9 +408,8 @@ def switch_character():
     info.set_life(saved_life)
     info.set_score(saved_score)
 
-    # Re-attach flier animations (they were attached to the flier sprites themselves earlier)
-    # Camera follow and z already set in createPlayer()
-    # done
+    # Ensure the hero has the correct current animation action set
+    animation.set_action(hero, heroCurrentAction)
 
 
 def on_b_pressed():
@@ -432,7 +451,7 @@ def on_update2():
 game.on_update(on_update2)
 
 
-# Reset double jump when standing on wall
+# Reset double jump when standing on ground
 def on_update3():
     global canDoubleJump
     if hero.is_hitting_tile(CollisionDirection.BOTTOM):
@@ -443,7 +462,7 @@ game.on_update(on_update3)
 
 # set up hero animations and apply traction
 def on_update4():
-    global heroFacingLeft
+    global heroFacingLeft, heroCurrentAction
     # Update facing based on vx
     if hero.vx < 0:
         heroFacingLeft = True
@@ -454,24 +473,34 @@ def on_update4():
     if hero.is_hitting_tile(CollisionDirection.TOP):
         hero.vy = 0
 
-    # Set jumping animations if airborne
-    if hero.vy < 20 and not (hero.is_hitting_tile(CollisionDirection.BOTTOM)):
+    # Decide desired action. Use grounded check (is_hitting_tile(BOTTOM)) to determine airborne.
+    grounded = hero.is_hitting_tile(CollisionDirection.BOTTOM)
+
+    if not grounded:
+        # If airborne, always use jumping animation (prevents flicker between run and jump)
         if heroFacingLeft:
-            animation.set_action(hero, ActionKind.JumpingLeft)
+            desired_action = ActionKind.JumpingLeft
         else:
-            animation.set_action(hero, ActionKind.JumpingRight)
-    elif hero.vx < 0:
-        animation.set_action(hero, ActionKind.RunningLeft)
-    elif hero.vx > 0:
-        animation.set_action(hero, ActionKind.RunningRight)
+            desired_action = ActionKind.JumpingRight
     else:
-        if heroFacingLeft:
-            animation.set_action(hero, ActionKind.IdleLeft)
+        # Grounded: choose running or idle based on vx
+        if hero.vx < 0:
+            desired_action = ActionKind.RunningLeft
+        elif hero.vx > 0:
+            desired_action = ActionKind.RunningRight
         else:
-            animation.set_action(hero, ActionKind.IdleRight)
+            if heroFacingLeft:
+                desired_action = ActionKind.IdleLeft
+            else:
+                desired_action = ActionKind.IdleRight
+
+    # Only call set_action when the action changes to avoid restarting animations and causing visual glitches
+    if desired_action != heroCurrentAction:
+        animation.set_action(hero, desired_action)
+        heroCurrentAction = desired_action
 
     # Traction: when on ground and player isn't pressing left/right, apply friction
-    if hero.is_hitting_tile(CollisionDirection.BOTTOM):
+    if grounded:
         left_pressed = controller.left.is_pressed()
         right_pressed = controller.right.is_pressed()
         if not left_pressed and not right_pressed:
