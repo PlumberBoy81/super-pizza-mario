@@ -179,6 +179,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "squid"
     },
+    "r~mvJTaRamkcq+z-iioK": {
+        "data": "hwQgACAAAAD/////////DwAAAAAAAAAAf3Z3d3d3dw8AAAAAAAAAAH92d3d3d3f///////////9/dnd3d3d3/3d3d3d3d3d3f2ZmZmZmZv93d3d3d3d3d39mZmZmZmb/d3d3d3d3d3d/d3d3d3d3/2ZmZmZmZmZmf3d3d3d3d/9mZmZmZmZmZn93d3d3d3f/d3d3d3d3d3d/d3d3d3d3/3d3d3d3d3d3f3d3d3d3d/93d3d3d3d3d393d3d3d3f/d3d3d3d3d3d/ZmZmZmZm/3d3d3d3d3d3f3Z3d3d3d/9mZmZmZmZmZn92d3d3d3f/d3d3d3d3d3d/ZmZmZmZm/3d3d3d3d3d3f2ZmZmZmZv9mZmZmZmZmZn9mZmZmZmb/ZmZmZmZmZmZ/ZmZmZmZm/2ZmZmZmZmZmf2ZmZmZmZv9mZmZmZmZmZn9mZmZmZmb/ZmZmZmZmZmZ/ZmZmZmZm/2ZmZmZmZmZmf2ZmZmZmZv9mZmZmZmZmZn9mZmZmZmb/ZmZmZmZmZmZ/ZmZmZmZm/2dnZ2dnZ2dnf3Z2dnZ2dv92dnZ2dnZ2dn9mZ2dnZ2f/Z2dnZ2dnZ2d/dnZ2dnZ2/3d3d3d3d3d3f2ZnZ2dnZ/93d3d3d3d3d392d3d3d3f///////////9/dnd3d3d3DwAAAAAAAAAA/////////w8AAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "pipe"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
