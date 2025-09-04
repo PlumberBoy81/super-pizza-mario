@@ -3,25 +3,6 @@ namespace myImages {
 
     helpers._registerFactory("image", function(name: string) {
         switch(helpers.stringTrim(name)) {
-            case "BmqT:hp2ZmaM0F68tZo^":
-            case "goomba":return img`
-. . . . . . e e e e . . . . . . 
-. . . . . e e e e e e . . . . . 
-. . . . e e e e e e e e . . . . 
-. . . e e e e e e e e e e . . . 
-. . e f f e e e e e e f f e . . 
-. e e e d f e e e e f d e e e . 
-. e e e d f f f f f f d e e e . 
-e e e e d f d e e d f d e e e e 
-e e e e d d d e e d d d e e e e 
-e e e e e e e e e e e e e e e e 
-. e e e e d d d d d d e e e e . 
-. . . . d d d d d d d d . . . . 
-. . . . d d d d d d d d f f . . 
-. . . f f d d d d d f f f f f . 
-. . . f f f d d d f f f f f f . 
-. . . . f f f . . f f f f f . . 
-`;
             case "image1":
             case "pizza":return img`
 . . . . . . e e e e . . . . . . 
@@ -867,6 +848,95 @@ dddd88888888dddd
 ..eeee....eeee..
 eeeeee....eeeeee
 eeeeee....eeeeee
+`;
+            case "image37":
+            case "FireMario_IdleLeft":return img`
+.....11111......
+.....1111111....
+.....11111111...
+..11111111111...
+....dddfddeee...
+..ddddffddedde..
+.ddddddddeedde..
+.ddddfdddeeddee.
+..ffffffdddddee.
+..fffffdddddeee.
+...ddddddddee...
+.....dddddde....
+....12111121....
+...1121111211...
+..111211112111..
+.11112111121111.
+.11122111122111.
+1111221111221111
+1111222222221111
+1111252222521111
+dddd22222222dddd
+dddd22222222dddd
+.ddd22222222ddd.
+.dd2222222222dd.
+..222222222222..
+.222222..222222.
+.22222....22222.
+.22222....22222.
+..eeee....eeee..
+..eeee....eeee..
+eeeeee....eeeeee
+eeeeee....eeeeee
+`;
+            case "image36":
+            case "FireMario_IdleRight":return img`
+......11111.....
+....1111111.....
+...11111111.....
+...11111111111..
+...eeeddfddd....
+..eddeddffdddd..
+..eddeedddddddd.
+.eeddeedddfdddd.
+.eedddddffffff..
+.eeedddddfffff..
+...eedddddddd...
+....edddddd.....
+....12111121....
+...1121111211...
+..111211112111..
+.11112111121111.
+.11122111122111.
+1111221111221111
+1111222222221111
+1111252222521111
+dddd22222222dddd
+dddd22222222dddd
+.ddd22222222ddd.
+.dd2222222222dd.
+..222222222222..
+.222222..222222.
+.22222....22222.
+.22222....22222.
+..eeee....eeee..
+..eeee....eeee..
+eeeeee....eeeeee
+eeeeee....eeeeee
+`;
+            case "BmqT:hp2ZmaM0F68tZo^":
+            case "goomba":return img`
+. . . . . . e e e e . . . . . . 
+. . . . . e e e e e e . . . . . 
+. . . . e e e e e e e e . . . . 
+. . . e e e e e e e e e e . . . 
+. . e f f e e e e e e f f e . . 
+. e e e 1 f e e e e f 1 e e e . 
+. e e e 1 f f f f f f 1 e e e . 
+e e e e 1 f 1 e e 1 f 1 e e e e 
+e e e e 1 1 1 e e 1 1 1 e e e e 
+e e e e e e e e e e e e e e e e 
+. e e e e d d d d d d e e e e . 
+. . . . d d d d d d d d . . . . 
+. . . . d d d d d d d d f f . . 
+. . . f f d d d d d f f f f f . 
+. . . f f f d d d f f f f f f . 
+. . . . f f f . . f f f f f . . 
 `;
         }
         return null;

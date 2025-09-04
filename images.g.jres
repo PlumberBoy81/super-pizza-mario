@@ -1,9 +1,4 @@
 {
-    "BmqT:hp2ZmaM0F68tZo^": {
-        "data": "hwQQABAAAAAAAADg7gAAAAAA4O7uDgAAAADu7u4OAAAA4O/u7g7wDwDu393t3v3/4O7+/+3d3f/u7u7f7d3d/e7u7u/u3d0N7u7u7+7d3Q3u7u7f7d3d/+Du/v/t3f3/AO7f3e3e/f8A4O/u7g7//wAA7u7uDv//AADg7u4O8A8AAADg7gAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "goomba"
-    },
     "image1": {
         "data": "hwQQABAAAAAAAAAAAADu7gAAAAAA7l3lAAAAAO5dVeUAAADuXSVS7QAA7l1VJVIOAOBdVVVVVe7uTlUiVVVV5U7dVSJVVe0OTtRVVSVS7QBO1FRVJVLlAOBETVVV1Q4AAE5EXVXVDgAA4ETUVd0OAAAATkTd5AAAAADg1E3kAAAAAADu7g4AAA==",
         "mimeType": "image/x-mkcd-f4",
@@ -193,6 +188,21 @@
         "data": "hwQQACAAAAAAAAAAAAAAACAi3QAAAADuAAAA3QAAACAiIt3dgIgA7gAg0N3/AAAiIiLd3YiI7u4AINDd/w0gIiIi3Y2IiO7uACDd3f8NIiKIiIiIiIju7iIi3f3/3YiIiFiIiIiI7u4iIv3d/90iIiKIiIiIAAAAIiL/3d/dIiIiiIiICAAAACIi3d3d3SIiIoiIiAgAAAAiIt3u3d0iIiKIiIiIAAAAICLu7t3diIiIWIiIiIju7iAi3t3d7iIiiIiIiIiI7u4AIt7d7Q4gIiIi3Y2IiO7uAADg7u4AACIiIt3diIju7gAAAODuAAAgIiLd3YCIAO4AAAAAAAAAACAi3QAAAADu",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "SuperMario_IdleLeft"
+    },
+    "image37": {
+        "data": "hwQQACAAAAAAAAAAAAAAABAR3QAAAADuAAAA3QAAABAREd3dICIA7gAQ0N3/AAARERHd3SIi7u4AENDd/w0QERER3S0iIu7uABDd3f8NEREiIiIiIiLu7hER3f3/3SIiIlIiIiIi7u4REf3d/90REREiIiIiAAAAERH/3d/dERERIiIiAgAAABER3d3d3RERESIiIgIAAAAREd3u3d0REREiIiIiAAAAEBHu7t3dIiIiUiIiIiLu7hAR3t3d7hERIiIiIiIi7u4AEd7d7Q4QERER3S0iIu7uAADg7u4AABEREd3dIiLu7gAAAODuAAAQERHd3SAiAO4AAAAAAAAAABAR3QAAAADu",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "FireMario_IdleLeft"
+    },
+    "image36": {
+        "data": "hwQQACAAAAAAAAAAAAAAABAR3QAAAADuAAAA4O4AABAREd3dICIA7gAA4O7uAAARERHd3SIi7u4AEd7d7Q4QERER3S0iIu7uEBHe3d3uEREiIiIiIiLu7hAR7u7d3SIiIlIiIiIi7u4REd3u3d0REREiIiIiAAAAERHd3d3dERERIiIiAgAAABER/93f3RERESIiIgIAAAAREf3d/90REREiIiIiAAAAERHd/f/dIiIiUiIiIiLu7gAQ3d3/DRERIiIiIiIi7u4AENDd/w0QERER3S0iIu7uABDQ3f8AABEREd3dIiLu7gAAAN0AAAAQERHd3SAiAO4AAAAAAAAAABAR3QAAAADu",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "FireMario_IdleRight"
+    },
+    "BmqT:hp2ZmaM0F68tZo^": {
+        "data": "hwQQABAAAAAAAADg7gAAAAAA4O7uDgAAAADu7u4OAAAA4O/u7g7wDwDuHxHh3v3/4O7+/+Hd3f/u7u4f4d3d/e7u7u/u3d0N7u7u7+7d3Q3u7u4f4d3d/+Du/v/h3f3/AO4fEeHe/f8A4O/u7g7//wAA7u7uDv//AADg7u4O8A8AAADg7gAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "goomba"
     },
     "*": {
         "mimeType": "image/x-mkcd-f4",
