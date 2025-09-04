@@ -184,6 +184,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "pipe"
     },
+    "image34": {
+        "data": "hwQQACAAAAAAAAAAAAAAACAi3QAAAADuAAAA4O4AACAiIt3dgIgA7gAA4O7uAAAiIiLd3YiI7u4AIt7d7Q4gIiIi3Y2IiO7uICLe3d3uIiKIiIiIiIju7iAi7u7d3YiIiFiIiIiI7u4iIt3u3d0iIiKIiIiIAAAAIiLd3d3dIiIiiIiICAAAACIi/93f3SIiIoiIiAgAAAAiIv3d/90iIiKIiIiIAAAAIiLd/f/diIiIWIiIiIju7gAg3d3/DSIiiIiIiIiI7u4AINDd/w0gIiIi3Y2IiO7uACDQ3f8AACIiIt3diIju7gAAAN0AAAAgIiLd3YCIAO4AAAAAAAAAACAi3QAAAADu",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "SuperMario_IdleRight"
+    },
+    "image35": {
+        "data": "hwQQACAAAAAAAAAAAAAAACAi3QAAAADuAAAA3QAAACAiIt3dgIgA7gAg0N3/AAAiIiLd3YiI7u4AINDd/w0gIiIi3Y2IiO7uACDd3f8NIiKIiIiIiIju7iIi3f3/3YiIiFiIiIiI7u4iIv3d/90iIiKIiIiIAAAAIiL/3d/dIiIiiIiICAAAACIi3d3d3SIiIoiIiAgAAAAiIt3u3d0iIiKIiIiIAAAAICLu7t3diIiIWIiIiIju7iAi3t3d7iIiiIiIiIiI7u4AIt7d7Q4gIiIi3Y2IiO7uAADg7u4AACIiIt3diIju7gAAAODuAAAgIiLd3YCIAO4AAAAAAAAAACAi3QAAAADu",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "SuperMario_IdleLeft"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
